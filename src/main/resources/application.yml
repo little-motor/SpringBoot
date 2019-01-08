@@ -1,0 +1,4 @@
+#默认true时使用cglib  AopAutoConfiguration中默认使用true
+#spring:
+#  aop:
+#    proxy-target-class: false
