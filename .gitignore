@@ -27,3 +27,4 @@
 gradle-wrapper.jar
 gradle-wrapper.properties
 application.properties
+application.yml

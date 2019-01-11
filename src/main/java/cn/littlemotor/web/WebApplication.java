@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  *
  */
-@SpringBootApplication(scanBasePackages = {"cn.littlemotor.web.aspect","cn.littlemotor.web.controller"})
+@SpringBootApplication(scanBasePackages = {"cn.littlemotor.web.aspect","cn.littlemotor.web.controller","cn.littlemotor.web.test"})
 public class WebApplication {
 
 
