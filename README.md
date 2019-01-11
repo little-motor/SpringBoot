@@ -1,2 +1,5 @@
-# SpringBootinAction
+Spring Boot in Action
+------------
+------------
+
 Spring Boot exercise
