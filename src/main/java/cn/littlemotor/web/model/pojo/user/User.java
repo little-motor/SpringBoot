@@ -1,5 +1,7 @@
 package cn.littlemotor.web.model.pojo.user;
 
+import org.apache.ibatis.type.Alias;
+
 import java.sql.Timestamp;
 
 /**
@@ -7,6 +9,7 @@ import java.sql.Timestamp;
  * @author littlemotor
  * @date 19.1.13
  */
+@Alias(value = "user")
 public class User {
 
     private int id = 0;
