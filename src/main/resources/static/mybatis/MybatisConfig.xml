@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- 配置信息是有严格的先后顺序的不能改变 -->
+<configuration>
+
+    <!--<properties resource="cn/littlemotor/config/mybatis/jdbc.properties">-->
+    <!--&lt;!&ndash;一些配置参数&ndash;&gt;-->
+    <!--</properties>-->
+
+    <!--<settings>-->
+    <!--&lt;!&ndash; 这个配置使全局的映射器启用或禁用缓存 &ndash;&gt;-->
+    <!--<setting name="cacheEnabled" value="true"></setting>-->
+    <!--&lt;!&ndash; 允许自动生成主键，需要驱动支持 &ndash;&gt;-->
+    <!--<setting name="useGeneratedKeys" value="true"></setting>-->
+    <!--&lt;!&ndash; 配置默认的执行器 &ndash;&gt;-->
+    <!--<setting name="defaultExecutorType" value="REUSE"></setting>-->
+    <!--&lt;!&ndash; 延迟加载选项 &ndash;&gt;-->
+    <!--<setting name="lazyLoadingEnabled" value="true"/>-->
+    <!--</settings>-->
+
+
+    <!-- 别名 -->
+    <typeAliases>
+        <typeAlias  alias="user"
+                    type="cn.littlemotor.web.model.pojo.user.User"/>
+    </typeAliases>
+
+    <!-- 数据库环境 -->
+    <!--<environments default="development">-->
+    <!--<environment id="development">-->
+    <!--<transactionManager type="JDBC"/>-->
+    <!--<dataSource type="POOLED">-->
+    <!--<property name="driver" value="${database.driver}"/>-->
+    <!--<property name="url" value="${database.url}"/>-->
+    <!--<property name="username" value="${database.username}"/>-->
+    <!--<property name="password" value="${database.password}"/>-->
+    <!--</dataSource>-->
+    <!--</environment>-->
+    <!--</environments>-->
+
+
+    <!-- 引入映射器 -->
+    <mappers>
+        <mapper resource="static/mybatis/mapper/UserMapper.xml"/>
+    </mappers>
+
+</configuration>

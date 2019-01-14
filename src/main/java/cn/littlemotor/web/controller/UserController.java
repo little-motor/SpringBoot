@@ -17,16 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/user")
 public class UserController {
 
-    private UserDao userDao = null;
-
-    public UserController(@Autowired UserDao userDao){
-        this.userDao = userDao;
-    }
-
+    @Autowired
+    UserDao userDao = null;
 
     @RequestMapping("/print")
     @ResponseBody
     public User printUser(int id) {
+
 
         User user = userDao.getUser(id);
         return user;

@@ -1,3 +1,0 @@
-mapper-locations: classpath:static/mybatis/mapper/*.xml
-#扫描别名包和@Alias通用
-type-aliases-package: cn.littlemotor.web.model.pojo.user
