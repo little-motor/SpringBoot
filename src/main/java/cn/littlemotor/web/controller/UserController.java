@@ -2,7 +2,7 @@ package cn.littlemotor.web.controller;
 
 
 import cn.littlemotor.web.model.dao.UserDao;
-import cn.littlemotor.web.model.pojo.user.User;
+import cn.littlemotor.web.model.service.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

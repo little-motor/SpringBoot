@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @SpringBootApplication(scanBasePackages = {"cn.littlemotor.web.model","cn.littlemotor.web.controller"})
+//定义Mabatis的dao接口位置
 @MapperScan(
         //指定扫描包
         basePackages = "cn.littlemotor.web.model.dao.*",

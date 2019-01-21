@@ -1,4 +1,4 @@
-package cn.littlemotor.web.model.pojo.user;
+package cn.littlemotor.web.model.service.user;
 
 public enum SexEnum {
 

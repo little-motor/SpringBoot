@@ -25,7 +25,7 @@
     <!-- 别名 -->
     <typeAliases>
         <typeAlias  alias="user"
-                    type="cn.littlemotor.web.model.pojo.user.User"/>
+                    type="cn.littlemotor.web.model.service.user.User"/>
     </typeAliases>
 
     <!-- 数据库环境 -->

@@ -1,6 +1,6 @@
 package cn.littlemotor.web.model.dao;
 
-import cn.littlemotor.web.model.pojo.user.User;
+import cn.littlemotor.web.model.service.user.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
