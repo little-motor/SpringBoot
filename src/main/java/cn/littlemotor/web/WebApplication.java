@@ -1,14 +1,18 @@
 package cn.littlemotor.web;
 
+import cn.littlemotor.web.interceptor.DeCROSInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  *
  */
-@SpringBootApplication(scanBasePackages = {"cn.littlemotor.web.model","cn.littlemotor.web.controller"})
+@SpringBootApplication(scanBasePackages = {"cn.littlemotor.web.model", "cn.littlemotor.web.controller"})
 //定义Mabatis的dao接口位置
 @MapperScan(
         //指定扫描包
@@ -18,32 +22,21 @@ import org.springframework.stereotype.Repository;
         //指定标记的注解
         annotationClass = Repository.class
 )
-public class WebApplication {
+public class WebApplication implements WebMvcConfigurer {
 
-//    @Autowired
-//    SqlSessionFactory sqlSessionFactory = null;
+    public static void main(String[] args) {
+        SpringApplication.run(WebApplication.class, args);
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(WebApplication.class, args);
-	}
+    //注册拦截器
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
 
-//	@Bean
-//    public MapperFactoryBean<UserDao> test(){
-//        MapperFactoryBean<UserDao> mapperFactoryBean = new MapperFactoryBean<>();
-//        mapperFactoryBean.setSqlSessionFactory(sqlSessionFactory);
-//        mapperFactoryBean.setMapperInterface(UserDao.class);
-//        return mapperFactoryBean;
-//    }
+        //注册拦截器到Spring MVC机制，然后返回一个InterceptorRegistration
+        InterceptorRegistration registration = registry.addInterceptor(new DeCROSInterceptor());
+        //指定拦截器匹配模式
+        registration.addPathPatterns("/user/print");
 
-//    @Bean
-//    public MapperScannerConfigurer mapperScannerConfigurer(){
-//	    //定义扫描器实例
-//	    MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-//	    //加载SqlSessionFactory
-//        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
-//        mapperScannerConfigurer.setBasePackage("cn.littlemotor.web.model.dao.*");
-//        mapperScannerConfigurer.setAnnotationClass(Repository.class);
-//        return mapperScannerConfigurer;
-//    }
+    }
 }
 
