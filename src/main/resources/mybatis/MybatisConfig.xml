@@ -44,7 +44,7 @@
 
     <!-- 引入映射器 -->
     <mappers>
-        <mapper resource="static/mybatis/mapper/UserMapper.xml"/>
+        <mapper resource="mybatis/mapper/UserMapper.xml"/>
     </mappers>
 
 </configuration>
