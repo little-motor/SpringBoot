@@ -33,9 +33,10 @@ public class WebApplication implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
 
         //注册拦截器到Spring MVC机制，然后返回一个InterceptorRegistration
-        InterceptorRegistration registration = registry.addInterceptor(new DeCROSInterceptor());
+        //此处添加的是防止浏览器提示CROS的拦截器
+        InterceptorRegistration deCROSInterceptorRegistration = registry.addInterceptor(new DeCROSInterceptor());
         //指定拦截器匹配模式
-        registration.addPathPatterns("/user/print");
+        deCROSInterceptorRegistration.addPathPatterns("/**");
 
     }
 }
