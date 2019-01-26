@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 在测试中由于浏览器会出现CROS提示，需要用这个浏览器在头文件中做一些修改
+ * 在测试中由于浏览器会出现CROS提示，需要用这个浏览器在http头文件中做一些修改
  */
 public class DeCROSInterceptor implements HandlerInterceptor {
     @Override
