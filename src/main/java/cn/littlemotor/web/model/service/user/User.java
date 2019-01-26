@@ -12,9 +12,9 @@ import java.sql.Timestamp;
 @Alias(value = "user")
 public class User {
 
-    private int id = 0;
+    private int id;
     private String name = null;
-    private String sex = "男";
+    private String sex = null;
     private String email = null;
     private String phone = null;
     private String password = null;
@@ -23,7 +23,8 @@ public class User {
     private int rememberMe = 0;
     private String rememberToken = null;
     private int login = 0;
-    private int roleId = 0;
+    //默认普通用户
+    private int roleId = 1;
     private Timestamp createDate = null;
     private String describe = null;
 
@@ -45,6 +46,13 @@ public class User {
         this.roleId = roleId;
         this.createDate = createDate;
         this.describe = describe;
+    }
+
+    //用于主页注册
+    public User(String name, String email, String password){
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
     public int getId() {
