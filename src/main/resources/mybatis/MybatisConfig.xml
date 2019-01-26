@@ -10,22 +10,24 @@
     <!--&lt;!&ndash;一些配置参数&ndash;&gt;-->
     <!--</properties>-->
 
-    <!--<settings>-->
-    <!--&lt;!&ndash; 这个配置使全局的映射器启用或禁用缓存 &ndash;&gt;-->
-    <!--<setting name="cacheEnabled" value="true"></setting>-->
-    <!--&lt;!&ndash; 允许自动生成主键，需要驱动支持 &ndash;&gt;-->
-    <!--<setting name="useGeneratedKeys" value="true"></setting>-->
-    <!--&lt;!&ndash; 配置默认的执行器 &ndash;&gt;-->
-    <!--<setting name="defaultExecutorType" value="REUSE"></setting>-->
-    <!--&lt;!&ndash; 延迟加载选项 &ndash;&gt;-->
-    <!--<setting name="lazyLoadingEnabled" value="true"/>-->
-    <!--</settings>-->
+    <settings>
+        <!--&lt;!&ndash; 这个配置使全局的映射器启用或禁用缓存 &ndash;&gt;-->
+        <!--<setting name="cacheEnabled" value="true"></setting>-->
+        <!-- 允许自动生成主键，需要驱动支持 -->
+        <setting name="useGeneratedKeys" value="true"></setting>
+        <!--&lt;!&ndash; 配置默认的执行器 &ndash;&gt;-->
+        <!--<setting name="defaultExecutorType" value="REUSE"></setting>-->
+        <!-- 延迟加载选项 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--开启驼峰映射-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+
+    </settings>
 
 
     <!-- 别名 -->
     <typeAliases>
-        <typeAlias  alias="user"
-                    type="cn.littlemotor.web.model.service.user.User"/>
+        <typeAlias alias="user" type="cn.littlemotor.web.model.service.user.User"/>
     </typeAliases>
 
     <!-- 数据库环境 -->
