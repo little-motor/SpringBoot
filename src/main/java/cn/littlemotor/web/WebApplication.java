@@ -4,6 +4,8 @@ import cn.littlemotor.web.interceptor.DeCROSInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -22,7 +24,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
         //指定标记的注解
         annotationClass = Repository.class
 )
-public class WebApplication implements WebMvcConfigurer {
+public class WebApplication extends SpringBootServletInitializer implements WebMvcConfigurer{
 
     public static void main(String[] args) {
         SpringApplication.run(WebApplication.class, args);
@@ -38,6 +40,12 @@ public class WebApplication implements WebMvcConfigurer {
         //指定拦截器匹配模式
         deCROSInterceptorRegistration.addPathPatterns("/**");
 
+    }
+
+    //覆盖configure方法，用于部署war文件
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(WebApplication.class);
     }
 }
 

@@ -14,6 +14,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'war'
 
 group = 'cn.littlemotor'
 version = '0.0.1-SNAPSHOT'
@@ -28,6 +29,7 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-aop')
 	implementation('org.springframework.boot:spring-boot-starter-jdbc')
 	runtimeOnly('mysql:mysql-connector-java')
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	//implementation('org.springframework.boot:spring-boot-starter-data-redis')
 	//implementation('org.springframework.boot:spring-boot-starter-security')
 	implementation('org.springframework.boot:spring-boot-starter-web')
