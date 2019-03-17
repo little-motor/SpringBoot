@@ -25,9 +25,9 @@
     </settings>
 
 
-    <!-- 别名 -->
+    <!--别名 -->
     <typeAliases>
-        <typeAlias alias="user" type="cn.littlemotor.web.model.service.user.User"/>
+        <typeAlias alias="User" type="cn.littlemotor.web.model.service.user.User"/>
     </typeAliases>
 
     <!-- 数据库环境 -->

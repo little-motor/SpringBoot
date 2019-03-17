@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface UserDao {
 
     public User getUser(int id);
+
+    public void setUser(User user);
 }
