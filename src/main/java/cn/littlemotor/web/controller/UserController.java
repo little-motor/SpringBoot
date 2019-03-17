@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Map;
+
 /**
  * User控制器
  * @author littlemotor
@@ -22,11 +24,9 @@ public class UserController {
 
     @RequestMapping("/print")
     @ResponseBody
-    public User printUser(int id) {
-
-
+    public Map printUser(int id) {
         User user = userDao.getUser(id);
-        return user;
+        return  user.toMap();
     }
 
 }
