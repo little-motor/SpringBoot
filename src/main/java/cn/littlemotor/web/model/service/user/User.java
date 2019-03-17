@@ -3,13 +3,15 @@ package cn.littlemotor.web.model.service.user;
 import org.apache.ibatis.type.Alias;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 对应User表
  * @author littlemotor
  * @date 19.1.13
  */
-@Alias(value = "user")
+@Alias(value = "User")
 public class User {
 
     private int id;
@@ -27,6 +29,8 @@ public class User {
     private int roleId = 1;
     private Timestamp createDate = null;
     private String describe = null;
+
+    private Map<String, String> userInfo = new HashMap<>();
 
     public User() {
     }
@@ -165,5 +169,20 @@ public class User {
 
     public void setDescribe(String describe) {
         this.describe = describe;
+    }
+
+    public Map<String,String> toMap(){
+        userInfo.put("id",Integer.toString(this.id));
+        userInfo.put("name", this.name);
+        userInfo.put("sex", this.sex);
+        userInfo.put("email", this.email);
+        userInfo.put("phone", this.phone);
+        userInfo.put("password", this.password);
+        userInfo.put("active", Integer.toString(this.active));
+        userInfo.put("remember", Integer.toString(this.rememberMe));
+        userInfo.put("login", Integer.toString(this.login));
+        userInfo.put("roleId", Integer.toString(this.roleId));
+        userInfo.put("createDate", this.createDate.toString());
+        return userInfo;
     }
 }
