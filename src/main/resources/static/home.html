@@ -98,11 +98,11 @@
                             </div>
                             <div class="form-group">
                                 <div class="">
-                                    <button type="button" class="btn btn-success btn-lg btn-block" v-on:click="submit">加入社区</button>
+                                    <button type="button" class="btn btn-success btn-lg btn-block" onclick="regist()">加入社区</button>
                                     <!--<input type="submit" class="btn btn-success btn-lg btn-block" value="加入社区">-->
                                 </div>
                             </div>
-                            <p>{{name + email + password}}</p>
+                            <!--<p>{{name + email + password}}</p>-->
                         </form>
                         <div class="text-center">
                             <h4 style="color: #777;">已有账号？<a href="/login">立即登陆</a></h4>
@@ -173,49 +173,90 @@
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 <script src="home.js"></script>
-<script>
-    axios.defaults.baseURL = "http://localhost:8080";
 
-    var registerForm = new Vue({
-        el: '#register_form',
-        data: {
-            name: '',
-            email: '',
-            password: ''
-        },
-        methods: {
-            //注册账户
-            submit: function (event) {
-                //基础的数据验证先省略
-                //axios发送json
-                axios.post(
-                    '/register',{
-                        data: {
-                            name: this.name,
-                            email: this.email,
-                            password: this.password
-                        },
-                        // `transformRequest` 允许在向服务器发送前，修改请求数据
-                        // 只能用在 'PUT', 'POST' 和 'PATCH' 这几个请求方法
-                        // 后面数组中的函数必须返回一个字符串，或 ArrayBuffer，或 Stream
-                        // transformRequest: [function (data) {
-                        //     // 对 data 进行任意转换处理
-                        //     alert(data)
-                        //     return data.length
-                        // }]
-                    }
-                    //返回数据对象
-                ).then(
-                    function (response) {
-                        
-                    }
-                    //返回的错误对象
-                ).catch(function (error) {
-                    
-                })
+<script>
+    //定义登陆的用户对象
+    var user = {
+        name: null,
+        email: null,
+        password: null
+    };
+
+    //向服务器发送json数据
+    function regist() {
+        //根据输入的内容初始化数据
+        user.name = document.getElementById("name").value;
+        user.email = document.getElementById("email").value;
+        user.password = document.getElementById("password").value;
+        //向服务器发送数据
+        ajax(user);
+    }
+
+    function ajax(data) {
+        var xhr = new XMLHttpRequest();
+        //需要在open()方法之前调用onreadystatechange事件，确保跨浏览器的兼容性
+        xhr.onreadystatechange = function () {
+            //状态从0-4，4表示接受了全部响应可以在客户端使用
+            if (xhr.readyState == 4) {
+                if ((xhr.status >= 200 && xhr.status <= 300) || xhr.status == 304) {
+                    alert("发送成功");
+                } else {
+                    alert("Request was unsuccessful: " + xhr.status);
+                }
             }
-        }
-    })
+        };
+        //启动请求
+        xhr.open("post", "/register", true);
+        //在open和send之间设置请求头
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        console.log("string is: " + JSON.stringify(data));
+        //发送数据到服务器
+        xhr.send(JSON.stringify(data));
+    }
 </script>
+<!--<script>-->
+    <!--axios.defaults.baseURL = "http://localhost:8080";-->
+
+    <!--var registerForm = new Vue({-->
+        <!--el: '#register_form',-->
+        <!--data: {-->
+            <!--name: '',-->
+            <!--email: '',-->
+            <!--password: ''-->
+        <!--},-->
+        <!--methods: {-->
+            <!--//注册账户-->
+            <!--submit: function (event) {-->
+                <!--//基础的数据验证先省略-->
+                <!--//axios发送json-->
+                <!--axios.post(-->
+                    <!--'/register',{-->
+                        <!--data: {-->
+                            <!--name: this.name,-->
+                            <!--email: this.email,-->
+                            <!--password: this.password-->
+                        <!--},-->
+                        <!--// `transformRequest` 允许在向服务器发送前，修改请求数据-->
+                        <!--// 只能用在 'PUT', 'POST' 和 'PATCH' 这几个请求方法-->
+                        <!--// 后面数组中的函数必须返回一个字符串，或 ArrayBuffer，或 Stream-->
+                        <!--// transformRequest: [function (data) {-->
+                        <!--//     // 对 data 进行任意转换处理-->
+                        <!--//     alert(data)-->
+                        <!--//     return data.length-->
+                        <!--// }]-->
+                    <!--}-->
+                    <!--//返回数据对象-->
+                <!--).then(-->
+                    <!--function (response) {-->
+                        <!---->
+                    <!--}-->
+                    <!--//返回的错误对象-->
+                <!--).catch(function (error) {-->
+                    <!---->
+                <!--})-->
+            <!--}-->
+        <!--}-->
+    <!--})-->
+<!--</script>-->
 </body>
 </html>
