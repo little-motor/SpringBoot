@@ -1,6 +1,5 @@
 package cn.littlemotor.web;
 
-import cn.littlemotor.web.controller.controllerConverter.StringToUserHttpMessageConverter;
 import cn.littlemotor.web.interceptor.DeCROSInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.BeanFactory;
@@ -9,13 +8,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.List;
 
 /**
  * 此处是对整个应用进行一些必要的附加设置
@@ -44,7 +40,6 @@ public class WebApplication extends SpringBootServletInitializer implements WebM
     //注册拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-
         //注册拦截器到Spring MVC机制，然后返回一个InterceptorRegistration
         //此处添加的是防止浏览器提示CROS的拦截器
         InterceptorRegistration deCROSInterceptorRegistration = registry.addInterceptor(new DeCROSInterceptor());
@@ -59,9 +54,9 @@ public class WebApplication extends SpringBootServletInitializer implements WebM
         return builder.sources(WebApplication.class);
     }
 
-    @Override
-    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(0,new StringToUserHttpMessageConverter());
-    }
+//    @Override
+//    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        //converters.add(0,new StringToUserHttpMessageConverter());
+//    }
 }
 
