@@ -22,9 +22,9 @@ public class User {
     private String password = null;
     private int active = 0;
     private String activeToken = null;
-    private int rememberMe = 0;
+    private boolean rememberMe = false;
     private String rememberToken = null;
-    private int login = 0;
+    private boolean login = false;
     //默认普通用户
     private int roleId = 1;
     private Timestamp createDate = null;
@@ -35,7 +35,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String name, String sex, String email, String phone, String password, int active, String activeToken, int rememberMe, String rememberToken, int login, int roleId, Timestamp createDate, String describe) {
+    public User(int id, String name, String sex, String email, String phone, String password, int active, String activeToken, boolean rememberMe, String rememberToken, boolean login, int roleId, Timestamp createDate, String describe) {
         this.id = id;
         this.name = name;
         this.sex = sex;
@@ -123,12 +123,14 @@ public class User {
         this.activeToken = activeToken;
     }
 
-    public int getRememberMe() {
+    public boolean getRememberMe() {
         return rememberMe;
     }
 
-    public void setRememberMe(int rememberMe) {
-        this.rememberMe = rememberMe;
+    public void setRememberMe(String rememberMe) {
+        if(rememberMe == "true"){
+            this.rememberMe = true;
+        }
     }
 
     public String getRememberToken() {
@@ -139,11 +141,11 @@ public class User {
         this.rememberToken = rememberToken;
     }
 
-    public int getLogin() {
+    public boolean getLogin() {
         return login;
     }
 
-    public void setLogin(int login) {
+    public void setLogin(boolean login) {
         this.login = login;
     }
 
@@ -179,8 +181,8 @@ public class User {
         userInfo.put("phone", this.phone);
         userInfo.put("password", this.password);
         userInfo.put("active", Integer.toString(this.active));
-        userInfo.put("remember", Integer.toString(this.rememberMe));
-        userInfo.put("login", Integer.toString(this.login));
+        userInfo.put("remember", Boolean.toString(this.rememberMe));
+        userInfo.put("login", Boolean.toString(this.login));
         userInfo.put("roleId", Integer.toString(this.roleId));
         userInfo.put("createDate", this.createDate.toString());
         return userInfo;
