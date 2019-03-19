@@ -25,7 +25,7 @@ public class UserController {
     @RequestMapping("/print")
     @ResponseBody
     public Map printUser(int id) {
-        User user = userDao.getUser(id);
+        User user = userDao.getUserbyId(id);
         return  user.toMap();
     }
 

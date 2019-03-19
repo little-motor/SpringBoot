@@ -10,7 +10,10 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface UserDao {
 
-    public User getUser(int id);
+    public User getUserbyId(int id);
+
+    //登陆时查找用户
+    public User getUserbyEmail(String email);
 
     public void setUser(User user);
 }
