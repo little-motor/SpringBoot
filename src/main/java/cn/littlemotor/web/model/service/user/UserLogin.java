@@ -1,35 +1,30 @@
 package cn.littlemotor.web.model.service.user;
 
-import cn.littlemotor.web.model.dao.UserDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * 用于用户登陆检查
  * @author littlemotor
  * @date 19.3.19
  */
+@Component
 public class UserLogin extends User{
-
-    @Autowired
-    UserDao userDao = null;
 
     //无参构造器防止controller注入对象时出错
     public UserLogin() {
-
     }
 
-    public UserLogin(String email, String password, String rememberMe){
-//        super.email = email;
-//        this.password = password;
-//        if(rememberMe == "true"){
-//            this.rememberMe = true;
-//        }
-        System.out.println("调用了youcan");
-    }
-
-    public void validateUser(){
-        //User user = userDao.getUserbyEmail(this.email);
-        //System.out.println(user.getPassword());
+    //验证用户登陆时输入的账号和数据库中的信息是否匹配
+    public boolean validateUser(User user){
+        if(user == null){
+            return false;
+        }
+        //注意此处比较字符串应该用equal方法而不是==
+        //==方法比较两个对象的地址，肯定为false
+        if(!user.getPassword().equals(this.getPassword())){
+            return false;
+        }
+        return true;
     }
 
 //    public static void main(String[] args) throws Exception{
