@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+
+<!--用户登陆页面-->
+<!--author: littlemotor-->
+<!--last modified: 19.3.22-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,6 +15,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+    <script src="basicMethod.js"></script>
 
 </head>
 <body>
@@ -49,12 +54,7 @@
         crossorigin="anonymous"></script>
 
 <script>
-    //定义登陆的用户对象
-    var user = {
-        email: null,
-        password: null,
-        rememberMe: false
-    };
+
 
     //向服务器发送json数据
     function login() {
@@ -69,30 +69,9 @@
             user.rememberMe = false;
         }
         //向服务器发送数据
-        ajax(user);
+        ajax(user,"POST");
     }
 
-    function ajax(data) {
-        var xhr = new XMLHttpRequest();
-        //需要在open()方法之前调用onreadystatechange事件，确保跨浏览器的兼容性
-        xhr.onreadystatechange = function () {
-            //状态从0-4，4表示接受了全部响应可以在客户端使用
-            if (xhr.readyState == 4) {
-                if ((xhr.status >= 200 && xhr.status <= 300) || xhr.status == 304) {
-                    alert("发送成功");
-                } else {
-                    alert("Request was unsuccessful: " + xhr.status);
-                }
-            }
-        };
-        //启动请求
-        xhr.open("post", "", true);
-        //设置请求头需要在open和send函数之间
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        console.log("string is: " + JSON.stringify(data));
-        //发送数据到服务器
-        xhr.send(JSON.stringify(data));
-    }
 </script>
 </body>
 </html>
