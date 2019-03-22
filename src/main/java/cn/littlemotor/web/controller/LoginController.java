@@ -4,11 +4,8 @@ import cn.littlemotor.web.model.dao.UserDao;
 import cn.littlemotor.web.model.service.user.User;
 import cn.littlemotor.web.model.service.user.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -19,7 +16,7 @@ import java.util.Map;
  * @author littlemotor
  * @date 19.3.17
  */
-@Controller
+@RestController
 public class LoginController {
 
     @Autowired
@@ -29,13 +26,12 @@ public class LoginController {
 
     //打开登陆页面
     @GetMapping(path = "/login")
-    public String login(){
-
-        return "login.html";
+    public ModelAndView login(){
+        ModelAndView modelAndView = new ModelAndView("login.html");
+        return modelAndView;
     }
 
     //用户登陆
-    @ResponseBody
     @PostMapping(path = "/login")
     public boolean login(@RequestBody UserLogin userLogin, HttpSession httpSession){
         User user = userDao.getUserbyEmail(userLogin.getEmail());
