@@ -13,7 +13,12 @@ public interface UserDao {
     public User getUserbyId(int id);
 
     //登陆时查找用户
+    //security.UserDetailsServiceImp根据name查找用户
     public User getUserbyEmail(String email);
 
+    //注册用户时使用
     public void setUser(User user);
+
+
+
 }
