@@ -17,6 +17,9 @@ import java.sql.SQLException;
         annotations = {Controller.class, RestController.class})
 public class ExceptionControllerAdvice {
 
+    /*
+    通过在返回的head里面加入错误信息，让前端获得错误提示
+     */
     @ExceptionHandler(value = {SQLException.class})
     //处理注册错误过程中出现的错误
     public ResponseEntity<String> registerException(Exception e){
