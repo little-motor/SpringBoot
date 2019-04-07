@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author littlemotor
  * @date 19.3.12
  */
-@SpringBootApplication(scanBasePackages = {"cn.littlemotor.web.model", "cn.littlemotor.web.controller"})
+@SpringBootApplication(scanBasePackages = {"cn.littlemotor.web.model", "cn.littlemotor.web.controller", "cn.littlemotor.web.security"})
 //定义Mabatis的dao接口位置
 @MapperScan(
         //指定扫描包
