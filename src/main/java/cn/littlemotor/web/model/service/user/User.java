@@ -1,6 +1,8 @@
 package cn.littlemotor.web.model.service.user;
 
 import org.apache.ibatis.type.Alias;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -14,6 +16,7 @@ import java.util.Map;
 @Alias(value = "User")
 public class User {
 
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private int id;
     private String name = null;
     private String sex = null;
@@ -27,6 +30,8 @@ public class User {
     private boolean login = false;
     //默认普通用户
     private int roleId = 1;
+    //默认为ROLE_USER
+    private String role = "ROLE_USER";
     private Timestamp createDate = null;
     private String describe = null;
 
@@ -35,7 +40,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String name, String sex, String email, String phone, String password, int active, String activeToken, boolean rememberMe, String rememberToken, boolean login, int roleId, Timestamp createDate, String describe) {
+    public User(int id, String name, String sex, String email, String phone, String password, int active, String activeToken, boolean rememberMe, String rememberToken, boolean login, int roleId, String role, Timestamp createDate, String describe) {
         this.id = id;
         this.name = name;
         this.sex = sex;
@@ -48,6 +53,7 @@ public class User {
         this.rememberToken = rememberToken;
         this.login = login;
         this.roleId = roleId;
+        this.role = role;
         this.createDate = createDate;
         this.describe = describe;
     }
@@ -103,8 +109,9 @@ public class User {
         return password;
     }
 
+    //为了安全起见，password需要加密处理
     public void setPassword(String password) {
-        this.password = password;
+        this.password = passwordEncoder.encode(password);
     }
 
     public int getActive() {
@@ -155,6 +162,14 @@ public class User {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Timestamp getCreateDate() {
