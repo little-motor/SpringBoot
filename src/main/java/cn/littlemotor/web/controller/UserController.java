@@ -2,7 +2,7 @@ package cn.littlemotor.web.controller;
 
 
 import cn.littlemotor.web.model.dao.UserDao;
-import cn.littlemotor.web.model.service.user.User;
+import cn.littlemotor.web.model.service.user.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,7 @@ public class UserController {
     @RequestMapping("/print")
     @ResponseBody
     public Map printUser(int id) {
-        User user = userDao.getUserbyId(id);
+        UserLogin user = userDao.getUserbyId(id);
         return  user.toMap();
     }
 

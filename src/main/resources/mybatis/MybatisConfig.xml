@@ -28,6 +28,7 @@
     <!--别名 -->
     <typeAliases>
         <typeAlias alias="User" type="cn.littlemotor.web.model.service.user.User"/>
+        <typeAlias alias="UserLogin" type="cn.littlemotor.web.model.service.user.UserLogin"/>
     </typeAliases>
 
     <!-- 数据库环境 -->

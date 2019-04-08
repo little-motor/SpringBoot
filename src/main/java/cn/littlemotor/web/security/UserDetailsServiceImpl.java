@@ -2,6 +2,7 @@ package cn.littlemotor.web.security;
 
 import cn.littlemotor.web.model.dao.UserDao;
 import cn.littlemotor.web.model.service.user.User;
+import cn.littlemotor.web.model.service.user.UserLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,9 +25,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     UserDao userDao = null;
 
+    private UserLogin user = null;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userDao.getUserbyEmail(email);
+        this.user = userDao.getUserbyEmail(email);
+        System.out.println(user.toMap());
         return UserToUserdetails(user);
     }
 
@@ -42,11 +46,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         boolean accountNonLocked = true;
 
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        authorityList.add(new SimpleGrantedAuthority(user.getRole()));
+        authorityList.add(new SimpleGrantedAuthority(user.getRoleContent()));
 
         UserDetails userDetails =
                 new org.springframework.security.core.userdetails.User(
                         userName, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorityList);
         return  userDetails;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

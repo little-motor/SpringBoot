@@ -3,15 +3,16 @@
 <mapper namespace="cn.littlemotor.web.model.dao.UserDao">
 
 
-    <select id="getUserbyId" parameterType="int" resultType="User">
+    <select id="getUserbyId" parameterType="int" resultType="UserLogin">
         select * from user
           where id = #{id}
     </select>
 
     <!--根据邮箱验证用户登陆-->
-    <select id="getUserbyEmail" parameterType="string" resultType="User">
-        select * from user
-          where email = #{email}
+    <select id="getUserbyEmail" parameterType="string" resultType="UserLogin">
+        select *
+        from user
+        where email = #{email}
     </select>
 
     <insert id="setUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">

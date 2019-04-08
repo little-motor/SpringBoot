@@ -22,16 +22,14 @@ public class User {
     private String sex = null;
     private String email = null;
     private String phone = null;
-    private String password = null;
+    protected String password = null;
     private int active = 0;
     private String activeToken = null;
     private boolean rememberMe = false;
     private String rememberToken = null;
     private boolean login = false;
-    //默认普通用户
-    private int roleId = 1;
     //默认为ROLE_USER
-    private String role = "ROLE_USER";
+    private String roleContent = "ROLE_USER";
     private Timestamp createDate = null;
     private String describe = null;
 
@@ -40,7 +38,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String name, String sex, String email, String phone, String password, int active, String activeToken, boolean rememberMe, String rememberToken, boolean login, int roleId, String role, Timestamp createDate, String describe) {
+    public User(int id, String name, String sex, String email, String phone, String password, int active, String activeToken, boolean rememberMe, String rememberToken, boolean login, String roleContent, Timestamp createDate, String describe) {
         this.id = id;
         this.name = name;
         this.sex = sex;
@@ -52,8 +50,7 @@ public class User {
         this.rememberMe = rememberMe;
         this.rememberToken = rememberToken;
         this.login = login;
-        this.roleId = roleId;
-        this.role = role;
+        this.roleContent = roleContent;
         this.createDate = createDate;
         this.describe = describe;
     }
@@ -140,6 +137,14 @@ public class User {
         }
     }
 
+    public void setRoleContent(String roleContent){
+        this.roleContent = roleContent;
+    }
+
+    public String getRoleContent(){
+        return roleContent;
+    }
+
     public String getRememberToken() {
         return rememberToken;
     }
@@ -154,22 +159,6 @@ public class User {
 
     public void setLogin(boolean login) {
         this.login = login;
-    }
-
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public Timestamp getCreateDate() {
@@ -195,10 +184,10 @@ public class User {
         userInfo.put("email", this.email);
         userInfo.put("phone", this.phone);
         userInfo.put("password", this.password);
+        userInfo.put("roleContent", this.roleContent);
         userInfo.put("active", Integer.toString(this.active));
         userInfo.put("remember", Boolean.toString(this.rememberMe));
         userInfo.put("login", Boolean.toString(this.login));
-        userInfo.put("roleId", Integer.toString(this.roleId));
         userInfo.put("createDate", this.createDate.toString());
         return userInfo;
     }

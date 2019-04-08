@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserLogin extends User{
 
+
     //无参构造器防止controller注入对象时出错
     public UserLogin() {
     }
@@ -27,8 +28,17 @@ public class UserLogin extends User{
         return true;
     }
 
-//    public static void main(String[] args) throws Exception{
-//        UserLogin userLogin = new UserLogin("3432","fewf","true");
+    //因为从数据库中取出来之后再setPassword的时候是不需要加密的
+    @Override
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+//        public static void main(String[] args) throws Exception{
+//        UserLogin userLogin = new UserLogin();
+//        userLogin.setrole
+//        userLogin.setEmail("abc");
+//        System.out.println(userLogin.getEmail());
 //        System.out.println(userLogin.rememberMe);
 //        Method method = userLogin.getClass().getSuperclass().getMethod("getRememberMe", new Class[0]);
 //

@@ -56,7 +56,9 @@ public class LittlemotorWebSecurityConfigurerAdapter extends WebSecurityConfigur
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().permitAll();
+        http.authorizeRequests().antMatchers("/home").authenticated()
+                .and().authorizeRequests().antMatchers("/**").permitAll()
+                .and().formLogin().loginPage("/login").defaultSuccessUrl("/");
     }
 
 

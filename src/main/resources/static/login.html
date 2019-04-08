@@ -16,34 +16,76 @@
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
     <script src="basicMethod.js"></script>
+    <style>
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #eee;
+        }
 
+        .form-signin {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+
+        .form-signin .form-signin-heading,
+        .form-signin .checkbox {
+            margin-bottom: 10px;
+        }
+
+        .form-signin .checkbox {
+            font-weight: 400;
+        }
+
+        .form-signin .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+
+        .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    </style>
 </head>
 <body>
-<form>
-    <div class="container">
-        <div class="row"></div>
-        <div class="row">
-            <div class="col-md-offset-3 col-md-6">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <input type="email" class="form-control" id="email" placeholder="支持邮箱登陆">
-                    </div>
-                    <div class="form-group help">
-                        <input type="password" class="form-control" id="password" placeholder="密　码">
-                    </div>
-                    <div class="form-group">
-                        <div class="main-checkbox">
-                            <input type="checkbox" value="remember" id="checkbox"/>Remember Me
-                        </div>
-                        <p>
-                            <button type="button" class="btn btn-primary btn-lg btn-block" onclick="login()">登录</button>
-                        </p>
-                    </div>
-                </form>
-            </div>
+<div class="container">
+    <div class="row"></div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <form class="form-signin" method="post" action="/login">
+                <h2 class="form-signin-heading">Please sign in</h2>
+                <p>
+                    <input type="email" class="form-control" id="email" placeholder="支持邮箱登陆" name="username"/>
+                </p>
+                <p>
+                    <input type="password" class="form-control" id="password" placeholder="密　码" name="password"/>
+                </p>
+                <p>
+                    <input type="checkbox" value="remember" id="checkbox" name="remember-me"/>Remember Me
+                </p>
+                <p>
+                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="登陆"/>
+                </p>
+            </form>
         </div>
     </div>
-</form>
+</div>
 
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
@@ -69,7 +111,7 @@
             user.rememberMe = false;
         }
         //向服务器发送数据
-        ajax(user,"POST");
+        ajax(user, "PUT");
     }
 
 </script>

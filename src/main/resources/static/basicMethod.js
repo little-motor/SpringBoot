@@ -43,6 +43,28 @@ function combineMessage(reminderState,message){
     return a + reminderState + c + message + e;
 }
 
+/**
+ * 根据cookie的key获取相应的value，注意区分只有一个cookie的情况
+ * @param key
+ * @returns {string}
+ */
+function getCookie(key){
+    if(document.cookie.indexOf(";") == -1){
+        var arr1 = document.cookie.split("=");
+        return arr1[1];
+    } else {
+        //由于cookie是通过一个分号+空格的形式串联起来的，所以这里需要先按分号空格截断,变成[name=Jack,pwd=123456,age=22]数组类型；
+        var arr1=document.cookie.split("; ");
+        for(var i=0;i<arr1.length;i++){
+            //通过=截断，把name=Jack截断成[name,Jack]数组；
+            var arr2=arr1[i].split("=");
+            if(arr2[0]==key){
+                return decodeURI(arr2[1]);
+            }
+        }
+    }
+}
+
 function ajax(data,method) {
     var xhr = new XMLHttpRequest();
     //需要在open()方法之前调用onreadystatechange事件，确保跨浏览器的兼容性
@@ -68,6 +90,8 @@ function ajax(data,method) {
     xhr.open(method, "/register", true);
     //在open和send之间设置请求头
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    //post方法里面需要加入csrfToken
+    xhr.setRequestHeader("X-CSRF-TOKEN",getCookie("X-CSRF-TOKEN"));
     console.log("string is: " + JSON.stringify(data));
     //发送数据到服务器
     xhr.send(JSON.stringify(data));
