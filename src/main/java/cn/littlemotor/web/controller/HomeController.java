@@ -29,9 +29,10 @@ public class HomeController {
     }
 
     @GetMapping(path = "/home")
-    public String homeRedirect(){
+    public ModelAndView homeRedirect(){
         System.out.println("home2");
-        return "redirect:/";
+        ModelAndView modelAndView = new ModelAndView("home.html");
+        return modelAndView;
     }
 
 //    /**
