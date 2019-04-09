@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -37,7 +38,8 @@ public class LoginController {
     public ModelAndView login(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         //获取X-CSRF-TOKEN
         CsrfToken csrfToken = (CsrfToken) httpServletRequest.getAttribute("org.springframework.security.web.csrf.CsrfToken");
-        httpServletResponse.addHeader("X-CSRF-TOKEN", csrfToken.getToken());
+        Cookie csrfCookie = new Cookie("X-CSRF-TOKEN", csrfToken.getToken());
+        httpServletResponse.addCookie(csrfCookie);
         ModelAndView modelAndView = new ModelAndView("login.html");
         return modelAndView;
     }
