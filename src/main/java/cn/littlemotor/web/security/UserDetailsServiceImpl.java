@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -35,8 +36,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     //将user信息转换为userDetails对象
-    private UserDetails UserToUserdetails(User user){
-        String userName = user.getName();
+    private UserDetails UserToUserdetails(UserLogin user){
+        String userName = user.getEmail();
         String password = user.getPassword();
         boolean enabled = (user.getActive() > 0);
         //账户是否过期
@@ -49,12 +50,43 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         authorityList.add(new SimpleGrantedAuthority(user.getRoleContent()));
 
         UserDetails userDetails =
-                new org.springframework.security.core.userdetails.User(
-                        userName, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorityList);
+                new CustomUser(userName, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorityList, user);
         return  userDetails;
     }
 
     public User getUser() {
         return user;
+    }
+
+    /**
+     * 由于原来的User类记录的信息不是很全面，所以扩展之后加入了UserLogin实例，便于查看登陆用户信息
+     * CuntomUser实例在登陆验证后存在session内，key为"SPRING_SECURITY_CONTEXT"，
+     * 返回类型为SecurityContextImpl,通过getAuthentication得到UsernamePasswordAuthenticationToken实例
+     * 内部的princilp即为CustomUser
+     */
+    public class CustomUser extends org.springframework.security.core.userdetails.User{
+
+        private UserLogin userLogin = null;
+
+        public CustomUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+            super(username, password, authorities);
+        }
+
+        public CustomUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+            super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+        }
+
+        public CustomUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, UserLogin userLogin) {
+            super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+            this.userLogin = userLogin;
+        }
+
+        public UserLogin getUserLogin() {
+            return userLogin;
+        }
+
+        public void setUserLogin(UserLogin userLogin) {
+            this.userLogin = userLogin;
+        }
     }
 }
