@@ -35,13 +35,19 @@ var user = {
     rememberMe: undefined
 };
 
-//负责组合提示的消息，其中reminderState传递提示的状态（可选的有alert-success、alert-info、alert-warning、alert-danger）
-//message传递提示的具体消息
-function combineMessage(reminderState, message) {
+
+/**
+ * 负责组合提示的消息，其中reminderState传递提示的状态（可选的有alert-success、alert-info、alert-warning、alert-danger）
+ * message传递提示的具体消息
+ * @param state
+ * @param content
+ * @returns {string}
+ */
+function message(state, content) {
     var a = "<div style=\"margin-top: -2.5%\" class=\"alert alert-dismissible ";
     var c = "\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>";
     var e = "</div>";
-    return a + reminderState + c + message + e;
+    return a + state + c + content + e;
 }
 
 /**
@@ -78,15 +84,23 @@ function ajax(data, method, uri, contentType) {
         //状态从0-4，4表示接受了全部响应可以在客户端使用
         if (xhr.readyState == 4) {
             if ((xhr.status >= 200 && xhr.status <= 300) || xhr.status == 304) {
-                document.getElementById("reminder").innerHTML = combineMessage("alert-success", "注册成功");
+                switch (uri) {
+                    case "/register":
+                        document.getElementById("reminder").innerHTML = message("alert-success", xhr.getResponseHeader("Message"));
+                        break;
+                    case "/login":
+                        document.getElementById("reminder").innerHTML = message("alert-success","登陆成功正在跳转...");
+                        setTimeout(function(){document.location = 'http://localhost:8080';}, 1000);
+                        break;
+                }
             } else {
-                var httpHeader = xhr.getResponseHeader("wrongMessage");
+                var httpHeader = xhr.getResponseHeader("Message");
                 switch (httpHeader) {
                     case "DuplicateKeyException":
-                        document.getElementById("reminder").innerHTML = combineMessage("alert-danger", "邮箱已存在");
+                        document.getElementById("reminder").innerHTML = message("alert-danger", "邮箱已存在");
                         break;
                     default:
-                        document.getElementById("reminder").innerHTML = combineMessage("alert-danger", "注册失败");
+                        document.getElementById("reminder").innerHTML = message("alert-danger", "错误");
                 }
             }
         }
