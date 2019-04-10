@@ -29,12 +29,12 @@ public class RegisterController {
         HttpHeaders httpHeaders = new HttpHeaders();
         try {
             userDao.setUser(user);
-            httpHeaders.add("registed", "success");
         }catch (Exception e){
 //            System.out.println("输出错误：" + e.toString());
             throw e;
 
         }
+        httpHeaders.add("Message", "注册成功");
         return new ResponseEntity<>(httpHeaders,HttpStatus.CREATED);
     }
 
