@@ -1,17 +1,11 @@
 package cn.littlemotor.web.controller;
 
-import cn.littlemotor.web.model.dao.UserDao;
-import cn.littlemotor.web.model.service.user.User;
-import cn.littlemotor.web.security.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 登陆控制器，负责检验用户的登陆状态
@@ -25,6 +19,13 @@ public class LoginController {
     @GetMapping(path = "/login")
     public ModelAndView login(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         ModelAndView modelAndView = new ModelAndView("login.html");
+        return modelAndView;
+    }
+
+    //打开登陆页面
+    @GetMapping(path = "/logout")
+    public ModelAndView logout(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+        ModelAndView modelAndView = new ModelAndView("logout.html");
         return modelAndView;
     }
 
