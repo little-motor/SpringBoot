@@ -31,6 +31,7 @@ public class LittlemotorWebSecurityConfigurerAdapter extends WebSecurityConfigur
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        super.configure(auth);
         //密码编码器
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         //使用自定义UserDetailsService
@@ -56,10 +57,12 @@ public class LittlemotorWebSecurityConfigurerAdapter extends WebSecurityConfigur
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        super.configure(http);
         http.authorizeRequests().antMatchers("/home").authenticated()
                 .and().authorizeRequests().antMatchers("/**").permitAll()
-                .and().formLogin().loginPage("/login");
+                //自定义你登陆页面
+                .and().formLogin().loginPage("/login")
+                //自定义注销页面
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
     }
-
-
 }
