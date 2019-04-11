@@ -85,11 +85,20 @@ function ajax(data, method, uri, contentType) {
         if (xhr.readyState == 4) {
             if ((xhr.status >= 200 && xhr.status <= 300) || xhr.status == 304) {
                 switch (uri) {
+                    //注册成功后的提醒
                     case "/register":
                         document.getElementById("reminder").innerHTML = message("alert-success", xhr.getResponseHeader("Message"));
                         break;
+
+                    //登陆成功后的跳转提醒
                     case "/login":
                         document.getElementById("reminder").innerHTML = message("alert-success","登陆成功正在跳转...");
+                        setTimeout(function(){document.location = 'http://localhost:8080';}, 1000);
+                        break;
+
+                    //注销成功后的跳转提醒
+                    case "/logout":
+                        document.getElementById("reminder").innerHTML = message("alert-success","注销成功正在跳转...");
                         setTimeout(function(){document.location = 'http://localhost:8080';}, 1000);
                         break;
                 }
@@ -163,4 +172,27 @@ function serializeForm(id) {
 
     }
     return parts.join("&");
+}
+
+/**
+ * 负责根据用户的登陆状态进行页面布局的调整
+ */
+function loginState(){
+    var login = getCookie("login") == "true";
+    //登陆状态
+    if(login){
+        var elements = document.getElementsByClassName("logout");
+        for (var i=0,length=elements.length; i<length; i++)
+        {
+            elements[i].className += " hidden";
+        }
+    }
+    //非登陆状态
+    else {
+        var elements = document.getElementsByClassName("login");
+        for (var i=0,length=elements.length; i<length; i++)
+        {
+            elements[i].className += " hidden";
+        }
+    }
 }
