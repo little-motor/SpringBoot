@@ -34,56 +34,7 @@
 
 <div class="container">
 
-    <!-- The justified navigation menu is meant for single line per list item.
-         Multiple lines will require custom code not provided by Bootstrap. -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Brand</a>
-            </div>
-
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" class="btn btn-default">搜索</button>
-            </form>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="#">社区</a></li>
-                    <li><a href="#">留言</a></li>
-                    <li><a href="#">介绍</a></li>
-                </ul>
-
-                <!--根据是否登陆显示不同效果-->
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="logout"><a href="#">注册</a></li>
-                    <li class="logout"><a href="/login">登陆</a></li>
-                    <li class="dropdown login">
-                        <a class="dropdown-toggle" id="dropdownMenu1"
-                           data-toggle="dropdown">个人中心
-                            <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <!--<li role="presentation" class="dropdown-header">下拉菜单标题</li>-->
-                            <li role="presentation">
-                                <a role="menuitem" href="#">个人主页</a>
-                            </li>
-                            <li role="presentation">
-                                <a role="menuitem" href="#">账号</a>
-                            </li>
-                            <li role="presentation" class="divider"></li>
-                            <!--<li role="presentation" class="dropdown-header">下拉菜单标题</li>-->
-                            <li role="presentation">
-                                <a role="menuitem" href="#" onclick="logout()">注销</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
+    <script src="head.js"></script>
 
     <div id="middle">
         <!-- 板式 -->
@@ -159,39 +110,7 @@
     </div>
 
 
-    <!-- Site footer -->
-    <footer>
-        <div class="row footer-top footer">
-            <div class="row">
-                <div class="col-md-3 col-lg-3 col-lg-offset-1">
-                    <h4>更多内容</h4>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="https://github.com/little-motor/SpringBoot-in-Action" class="footLink"><h5>
-                                GitHub</h5></a>
-                            <a href="https://blog.csdn.net/qq_39385118" class="footLink"><h5>CSDN</h5></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-3 col-lg-3">
-                    <h4>联系方式</h4>
-                    <ul class="list-unstyled">
-                        <li>
-                            <h4>479217391@qq.com</h4>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <hr>
-            <ul class="list-inline text-center">
-                <li>
-                    <h5>2019 Software All Rights Reserved.</h5>
-                    <h5>Powered by Angel</h5>
-                </li>
-            </ul>
-        </div>
-    </footer>
-</div> <!-- /container -->
+    <script src="foot.js"></script>
 
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
