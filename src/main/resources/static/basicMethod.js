@@ -24,10 +24,13 @@
  *         │ ─┤ ─┤       │ ─┤ ─┤
  *         └──┴──┘       └──┴──┘  + + + +
  *                神兽保佑
- *               科一二三四全过
  *               统统没有bug
+ *              科一二三四全过
  */
-//定义登陆的用户对象，在JSON序列化过程中null的消息会自动被去除
+/**
+ * 定义登陆的用户对象，在JSON序列化过程中null的消息会自动被去除
+ * @type {{name: undefined, email: undefined, password: undefined, rememberMe: undefined}}
+ */
 var user = {
     name: undefined,
     email: undefined,
@@ -35,6 +38,13 @@ var user = {
     rememberMe: undefined
 };
 
+/**
+ * 定义发送message的对象，在JSON序列化过程中null的消息会自动被去除
+ * @type {{content: undefined}}
+ */
+var message = {
+    content: undefined
+};
 
 /**
  * 负责组合提示的消息，其中reminderState传递提示的状态（可选的有alert-success、alert-info、alert-warning、alert-danger）
@@ -43,7 +53,7 @@ var user = {
  * @param content
  * @returns {string}
  */
-function message(state, content) {
+function combineMessage(state, content) {
     var a = "<div style=\"margin-top: -2.5%\" class=\"alert alert-dismissible ";
     var c = "\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>";
     var e = "</div>";
@@ -85,31 +95,32 @@ function ajax(data, method, uri, contentType) {
         if (xhr.readyState == 4) {
             if ((xhr.status >= 200 && xhr.status <= 300) || xhr.status == 304) {
                 switch (uri) {
-                    //注册成功后的提醒
                     case "/register":
-                        document.getElementById("reminder").innerHTML = message("alert-success", xhr.getResponseHeader("Message"));
+                        document.getElementById("reminder").innerHTML = combineMessage("alert-success", xhr.getResponseHeader("Message"));
                         break;
-
-                    //登陆成功后的跳转提醒
                     case "/login":
-                        document.getElementById("reminder").innerHTML = message("alert-success","登陆成功正在跳转...");
+                        document.getElementById("reminder").innerHTML = combineMessage("alert-success","登陆成功正在跳转到主页...");
                         setTimeout(function(){document.location = 'http://localhost:8080';}, 1000);
                         break;
-
-                    //注销成功后的跳转提醒
                     case "/logout":
-                        document.getElementById("reminder").innerHTML = message("alert-success","注销成功正在跳转...");
+                        document.getElementById("reminder").innerHTML = combineMessage("alert-success", "注销成功正在跳转到主页...");
                         setTimeout(function(){document.location = 'http://localhost:8080';}, 1000);
                         break;
+                    case "/message":
+                        document.getElementById("reminder").innerHTML = combineMessage("alert-success", "发送成功");
+                        break;
+                    default:
+                        document.getElementById("reminder").innerHTML = combineMessage("alert-success", "成功");
+
                 }
             } else {
                 var httpHeader = xhr.getResponseHeader("Message");
                 switch (httpHeader) {
                     case "DuplicateKeyException":
-                        document.getElementById("reminder").innerHTML = message("alert-danger", "邮箱已存在");
+                        document.getElementById("reminder").innerHTML = combineMessage("alert-danger", "邮箱已存在");
                         break;
                     default:
-                        document.getElementById("reminder").innerHTML = message("alert-danger", "错误");
+                        document.getElementById("reminder").innerHTML = combineMessage("alert-danger", "错误");
                 }
             }
         }
@@ -195,4 +206,11 @@ function loginState(){
             elements[i].className += " hidden";
         }
     }
+}
+
+/**
+ * 注销用户
+ */
+function logout() {
+    ajax("", "POST", "/logout", "application/x-www-form-urlencoded");
 }
