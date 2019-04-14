@@ -31,6 +31,8 @@ public class UserCookie {
     private Cookie csrfTokenCookie = null;
     //用户名
     private Cookie userNameCookie = null;
+    //用户邮箱
+    private Cookie emailCookie = null;
 
     //用户请求
     private HttpServletRequest httpServletRequest = null;
@@ -75,6 +77,10 @@ public class UserCookie {
 
                 //userNameCookie
                 this.userNameCookie = new Cookie("userName", userLogin.getName());
+                cookieList.add(userNameCookie);
+
+                //emailCookie
+                this.userNameCookie = new Cookie("email", userLogin.getEmail());
                 cookieList.add(userNameCookie);
             } else {
 
