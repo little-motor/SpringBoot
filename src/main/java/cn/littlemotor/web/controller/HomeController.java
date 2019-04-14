@@ -7,9 +7,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class HomeController {
 
-    //考虑有无session的情况，required改为false
     @GetMapping(path = "/")
-    public ModelAndView homeWithSession(){
+    public ModelAndView homeWithGet(){
         ModelAndView modelAndView = new ModelAndView("home.html");
         System.out.println("home");
         return modelAndView;
