@@ -98,10 +98,17 @@ function ajax(data, method, uri, contentType) {
                     case "/register":
                         document.getElementById("reminder").innerHTML = combineMessage("alert-success", xhr.getResponseHeader("Message"));
                         break;
+                    //login页面需要判断登陆是否成功
                     case "/login":
-                        document.getElementById("reminder").innerHTML = combineMessage("alert-success","登陆成功正在跳转到主页...");
-                        setTimeout(function(){document.location = 'http://localhost:8080';}, 1000);
-                        break;
+                        if (getCookie("login") == "true") {
+                            document.getElementById("reminder").innerHTML = combineMessage("alert-success","登陆成功正在跳转到主页...");
+                            setTimeout(function(){document.location = 'http://localhost:8080';}, 1000);
+                            break;
+                        }
+                        else {
+                            document.getElementById("reminder").innerHTML = combineMessage("alert-danger","邮箱或密码错误请重新输入");
+                            break;
+                        }
                     case "/logout":
                         document.getElementById("reminder").innerHTML = combineMessage("alert-success", "注销成功正在跳转到主页...");
                         setTimeout(function(){document.location = 'http://localhost:8080';}, 1000);
