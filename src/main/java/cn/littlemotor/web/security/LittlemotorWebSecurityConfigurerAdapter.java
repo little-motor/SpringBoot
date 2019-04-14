@@ -59,13 +59,15 @@ public class LittlemotorWebSecurityConfigurerAdapter extends WebSecurityConfigur
     protected void configure(HttpSecurity http) throws Exception {
 //        super.configure(http);
         //当验证角色当时候其实也是附带检测了登陆状态
-        http.authorizeRequests()
+        http
+                //测试用
+                .authorizeRequests().antMatchers("/home").authenticated()
                 .and().authorizeRequests().antMatchers("/message").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .and().authorizeRequests().antMatchers("/**").permitAll()
                 //自定义你登陆页面
                 .and().formLogin().loginPage("/login")
                 //自定义注销页面
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
+                .and().logout().logoutUrl("/logout").logoutSuccessHandler(new CustomLogoutSuccessHandler());
 
     }
 }
