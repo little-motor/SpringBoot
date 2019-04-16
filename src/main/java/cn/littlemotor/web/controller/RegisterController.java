@@ -26,7 +26,6 @@ public class RegisterController {
      */
     @PostMapping(path = "/register")
     public ResponseEntity<String> register(@RequestBody User user) {
-        HttpHeaders httpHeaders = new HttpHeaders();
         try {
             userDao.setUser(user);
         }catch (Exception e){
@@ -34,6 +33,7 @@ public class RegisterController {
             throw e;
 
         }
+        HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Message", "注册成功");
         return new ResponseEntity<>(httpHeaders,HttpStatus.CREATED);
     }
