@@ -43,7 +43,10 @@ var user = {
  * @type {{content: undefined}}
  */
 var message = {
-    content: undefined
+    userId: undefined,
+    message: undefined,
+    likeNum: undefined,
+    comments: undefined
 };
 
 /**
