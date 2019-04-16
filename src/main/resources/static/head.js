@@ -41,7 +41,7 @@ document.writeln("                        <li role=\'presentation\'>");
 document.writeln("                            <a role=\'menuitem\' href=\'#\'>个人主页</a>");
 document.writeln("                        </li>");
 document.writeln("                        <li role=\'presentation\'>");
-document.writeln("                            <a role=\'menuitem\' href=\'#\'>留言</a>");
+document.writeln("                            <a role=\'menuitem\' href=\'/message\'>留言</a>");
 document.writeln("                        </li>");
 document.writeln("                        <li role=\'presentation\'>");
 document.writeln("                            <a role=\'menuitem\' href=\'#\'>账号</a>");
