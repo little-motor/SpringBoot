@@ -25,14 +25,16 @@ public class UserCookie {
 
     private List<Cookie> cookieList = new ArrayList<>();
 
-    //登陆状态
-    private Cookie loginCookie = null;
-    //csrfToken
-    private Cookie csrfTokenCookie = null;
+    //用户id
+    private  Cookie idCookie = null;
     //用户名
     private Cookie userNameCookie = null;
     //用户邮箱
     private Cookie emailCookie = null;
+    //登陆状态
+    private Cookie loginCookie = null;
+    //csrfToken
+    private Cookie csrfTokenCookie = null;
 
     //用户请求
     private HttpServletRequest httpServletRequest = null;
@@ -70,6 +72,10 @@ public class UserCookie {
             User customUser = (UserDetailsServiceImpl.CustomUser) authentication.getPrincipal();
             UserLogin userLogin = ((UserDetailsServiceImpl.CustomUser) customUser).getUserLogin();
             if(userLogin != null){
+
+                //idCookie
+                this.idCookie = new Cookie("userId", Integer.toString(userLogin.getId()));
+                cookieList.add(idCookie);
 
                 //loginCookie判断登陆状态
                 this.loginCookie = new Cookie("login", "true");
