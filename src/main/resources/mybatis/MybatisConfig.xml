@@ -27,8 +27,9 @@
 
     <!--别名 -->
     <typeAliases>
-        <typeAlias alias="User" type="cn.littlemotor.web.model.service.user.User"/>
-        <typeAlias alias="UserLogin" type="cn.littlemotor.web.model.service.user.UserLogin"/>
+        <typeAlias type="cn.littlemotor.web.model.service.user.User" alias="User"/>
+        <typeAlias type="cn.littlemotor.web.model.service.user.UserLogin" alias="UserLogin"/>
+        <typeAlias type="cn.littlemotor.web.model.service.content.Message" alias="Message"/>
     </typeAliases>
 
     <!-- 数据库环境 -->
@@ -48,6 +49,7 @@
     <!-- 引入映射器 -->
     <mappers>
         <mapper resource="mybatis/mapper/UserMapper.xml"/>
+        <mapper resource="mybatis/mapper/MessageMapper.xml"/>
     </mappers>
 
 </configuration>
