@@ -34,6 +34,7 @@ public class MessageController {
     public ResponseEntity<String> postMessage(@RequestBody Message message){
         try{
             messageDao.insertMessage(message);
+            messageDao.insertUserMessage(message);
         } catch (Exception e){
             System.out.println(e);
             throw e;
