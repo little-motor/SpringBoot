@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class Message {
 
+    //message id
+    private int messageId;
     //用户id
     private int userId;
     //用户发送信息
@@ -18,9 +20,15 @@ public class Message {
     //评论列表
     private List<String> comments = null;
 
-
     public Message(){
+    }
 
+    public int getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(int messageId) {
+        this.messageId = messageId;
     }
 
     public int getUserId() {
@@ -55,34 +63,9 @@ public class Message {
         this.comments = comments;
     }
 
-    /**
-     * 用于处理User_Message中间表
-     */
-    public class User_Message{
-
-        //用户id
-        private int userId;
-        //消息id
-        private int messageId;
-
-        public User_Message(){
-
-        }
-
-        public int getUserId() {
-            return userId;
-        }
-
-        public void setUserId(int userId) {
-            this.userId = userId;
-        }
-
-        public int getMessageId() {
-            return messageId;
-        }
-
-        public void setMessageId(int messageId) {
-            this.messageId = messageId;
-        }
+    @Override
+    public String toString(){
+        return "messageid:" + getMessageId() + "userid: " + getUserId();
     }
+
 }
