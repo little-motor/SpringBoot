@@ -17,10 +17,16 @@ public interface MessageDao {
 
     /**
      * web.controller.MessageController
-     * 负责向数据库插入数据
+     * 负责向数据库插入用户发送的消息
      * @param message
      */
     public void insertMessage(Message message);
 
+    /**
+     * web.controller.MessageController
+     * 负责在插入messge表后修改user_message中间表
+     * @param message
+     */
+    public void insertUserMessage(Message message);
 
 }
