@@ -30,6 +30,7 @@
         <typeAlias type="cn.littlemotor.web.model.service.user.User" alias="User"/>
         <typeAlias type="cn.littlemotor.web.model.service.user.UserLogin" alias="UserLogin"/>
         <typeAlias type="cn.littlemotor.web.model.service.content.Message" alias="Message"/>
+        <typeAlias type="cn.littlemotor.web.model.service.content.Comment" alias="Comment"/>
     </typeAliases>
 
     <!-- 数据库环境 -->
