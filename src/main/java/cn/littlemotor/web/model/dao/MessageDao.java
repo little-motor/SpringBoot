@@ -4,6 +4,8 @@ import cn.littlemotor.web.model.service.content.Message;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 此处用于对用户发送对消息进行增删改查
  * @author littlemotor
@@ -25,8 +27,14 @@ public interface MessageDao {
     /**
      * web.controller.MessageController
      * 负责在插入messge表后修改user_message中间表
-     * @param message
      */
-    public void insertUserMessage(Message message);
+//    public void insertUserMessage(Message message);
+
+    /**
+     * web.controller.MessageController
+     * 返回查询到的Message对象list
+     * @return
+     */
+    public List<Message> getMessage(int userId);
 
 }
