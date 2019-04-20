@@ -14,11 +14,11 @@ public class Message {
     //用户id
     private int userId;
     //用户发送信息
-    private String message = null;
+    private String messageData = null;
     //like的数量
     private int likeNum = 0;
     //评论列表
-    private List<String> comments = null;
+    private List<Comment> comments = null;
 
     public Message(){
     }
@@ -39,12 +39,12 @@ public class Message {
         this.userId = userId;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMessageData() {
+        return messageData;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessageData(String messageData) {
+        this.messageData = messageData;
     }
 
     public int getLikeNum() {
@@ -55,11 +55,11 @@ public class Message {
         this.likeNum = likeNum;
     }
 
-    public List<String> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<String> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 
