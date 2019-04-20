@@ -4,13 +4,33 @@
 
     <!--插入用户发送的消息-->
     <insert id="insertMessage" useGeneratedKeys="true" keyProperty="messageId" parameterType="Message">
-        insert into message(`data`) values (#{message});
+        insert into message(`data`,`user_id`) values (#{message},#{userId});
     </insert>
 
-    <!--当用户发送的消息插入message表后，修改user_message中间表-->
-    <insert id="insertUserMessage" useGeneratedKeys="true" keyProperty="id" parameterType="Message">
-        insert into user_message(`user_id`,`message_id`) values (#{userId},#{messageId});
-    </insert>
+    <!--&lt;!&ndash;当用户发送的消息插入message表后，修改user_message中间表&ndash;&gt;-->
+    <!--<insert id="insertUserMessage" useGeneratedKeys="true" keyProperty="id" parameterType="Message">-->
+    <!--insert into user_message(`user_id`,`message_id`) values (#{userId},#{messageId});-->
+    <!--</insert>-->
 
+    <select id="getMessage" parameterType="int" resultMap="messageList">
+        SELECT message.id as "message_id",message.user_id,message.message_data,`comment`.id as "comment_id",`comment`.comment_data,`like`.like_num
+        FROM message
+        LEFT JOIN `comment` ON `comment`.message_id=message.id
+        LEFT JOIN `like` ON `like`.message_id=message.id
+        WHERE message.user_id=#{userId};
 
+    </select>
+
+    <!--用于返回message实例列表的resultMap-->
+    <resultMap id="messageList" type="Message">
+        <id property="messageId" column="message_id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="messageData" column="message_data"></result>
+        <result property="likeNum" column="like_num"></result>
+        <collection property="comments" javaType="ArrayList" ofType="Comment">
+            <id property="commentId" column="comment_id"></id>
+            <result property="messageId" column="message_id"></result>
+            <result property="commentData" column="comment_data"></result>
+        </collection>
+    </resultMap>
 </mapper>
