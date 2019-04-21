@@ -49,6 +49,7 @@ public class BasicControllerAdvice {
         UserCookie userCookie = new UserCookie(httpServletRequest);
         List<Cookie> cookieList = userCookie.getCookieList();
         for (Cookie cookie : cookieList){
+            cookie.setPath("/");
             httpServletResponse.addCookie(cookie);
         }
     }
