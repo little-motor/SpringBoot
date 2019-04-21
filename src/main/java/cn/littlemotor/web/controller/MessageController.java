@@ -2,14 +2,14 @@ package cn.littlemotor.web.controller;
 
 import cn.littlemotor.web.model.dao.MessageDao;
 import cn.littlemotor.web.model.service.content.Message;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -26,6 +26,9 @@ public class MessageController {
     @Autowired
     MessageDao messageDao = null;
 
+    //objectMapper是线程安全的单例，需要提前配置好
+    ObjectMapper objectMapper = new ObjectMapper();
+
     /**
      * 返回message页面
      * @return
@@ -37,16 +40,18 @@ public class MessageController {
     }
 
     @GetMapping(path = "/message/getData")
-    public void getMessageData(){
+    public ResponseEntity<String> getMessageData(@CookieValue(name = "userId") int userId){
+        objectMapper.configure(SerializationFeature.INDENT_OUTPUT, Boolean.TRUE);
+        String body = null;
         try {
-            List<Message> messageList = messageDao.getMessage(54);
-        } catch (Exception e){
-            System.out.println("getMessageData wrong");
-            throw e;
+            List<Message> messageList = messageDao.getMessage(userId);
+            body = objectMapper.writeValueAsString(messageList);
+        } catch (JsonProcessingException jsonProcessingException){
+            System.out.println("jsonProcessingException");
         }
-
-        ResponseEntity<String> responseEntity = new ResponseEntity<>();
-
+        System.out.println(body);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        return new ResponseEntity<>(body, httpHeaders, HttpStatus.OK);
     }
 
 
