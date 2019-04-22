@@ -67,7 +67,7 @@
 <div class="container">
     <div class="row">
         <!--用于提示一些信息的标签-->
-        <div id="reminder"></div>
+        <div id="tips"></div>
     </div>
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
@@ -105,8 +105,53 @@
 
     //向服务器发送登陆验证需要的表单数据
     function login() {
+        var uri = "/login";
         //向服务器发送数据
-        ajax(serializeForm('form'), "POST", "/login", "application/x-www-form-urlencoded");
+        ajax(serializeForm('form'), "POST", uri, "application/x-www-form-urlencoded");
+    }
+
+    /**
+     * ajax方法
+     * @param data
+     * @param method
+     */
+    function ajax(data, method, uri, contentType) {
+        var xhr = new XMLHttpRequest();
+        //需要在open()方法之前调用onreadystatechange事件，确保跨浏览器的兼容性
+        xhr.onreadystatechange = function () {
+            //状态从0-4，4表示接受了全部响应可以在客户端使用
+            if (xhr.readyState == 4) {
+                if ((xhr.status >= 200 && xhr.status <= 300) || xhr.status == 304) {
+                    //用于根据状态显示提示
+                    switch (uri) {
+                        default:
+                            if (getCookie("login") == "true") {
+                                document.getElementById("tips").innerHTML = combineMessage("alert-success", "登陆成功正在跳转到主页...");
+                                setTimeout(function () {
+                                    document.location = 'http://localhost:8080';
+                                }, 1000);
+                            }
+                            else {
+                                document.getElementById("tips").innerHTML = combineMessage("alert-danger", "邮箱或密码错误请重新输入");
+                            }
+                    }
+                } else {
+                    var httpHeader = xhr.getResponseHeader("Message");
+                    switch (httpHeader) {
+                        default:
+                            document.getElementById("tips").innerHTML = combineMessage("alert-danger", "错误");
+                    }
+                }
+            }
+        };
+        //启动请求
+        xhr.open(method, uri, true);
+        //在open和send之间设置请求头
+        xhr.setRequestHeader("Content-Type", contentType);
+        //post方法里面需要加入csrfToken
+        xhr.setRequestHeader("X-CSRF-TOKEN", getCookie("X-CSRF-TOKEN"));
+        //发送数据到服务器
+        xhr.send(data);
     }
 
 </script>
