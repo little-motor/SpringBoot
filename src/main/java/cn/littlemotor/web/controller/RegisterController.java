@@ -31,10 +31,10 @@ public class RegisterController {
         }catch (Exception e){
 //            System.out.println("输出错误：" + e.toString());
             throw e;
-
         }
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Message", "注册成功");
+        //此处有个中文乱码的问题，下次学习一下
+        httpHeaders.add("Message","OK");
         return new ResponseEntity<>(httpHeaders,HttpStatus.CREATED);
     }
 
