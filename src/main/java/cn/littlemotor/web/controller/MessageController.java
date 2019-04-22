@@ -39,8 +39,9 @@ public class MessageController {
         return modelAndView;
     }
 
-    @GetMapping(path = "/message/getData")
+    @GetMapping(path = "/message/getMessages")
     public ResponseEntity<String> getMessageData(@CookieValue(name = "userId") int userId){
+        //这是缩进格式
         objectMapper.configure(SerializationFeature.INDENT_OUTPUT, Boolean.TRUE);
         String body = null;
         try {
