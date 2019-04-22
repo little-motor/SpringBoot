@@ -85,65 +85,24 @@ function getCookie(key) {
     }
 }
 
-/**
- * ajax的公用方法
- * @param data
- * @param method
- */
-function ajax(data, method, uri, contentType) {
-    var xhr = new XMLHttpRequest();
-    //需要在open()方法之前调用onreadystatechange事件，确保跨浏览器的兼容性
-    xhr.onreadystatechange = function () {
-        //状态从0-4，4表示接受了全部响应可以在客户端使用
-        if (xhr.readyState == 4) {
-            if ((xhr.status >= 200 && xhr.status <= 300) || xhr.status == 304) {
-                switch (uri) {
-                    case "/register":
-                        document.getElementById("reminder").innerHTML = combineMessage("alert-success", xhr.getResponseHeader("Message"));
-                        break;
-                    //login页面需要判断登陆是否成功
-                    case "/login":
-                        if (getCookie("login") == "true") {
-                            document.getElementById("reminder").innerHTML = combineMessage("alert-success","登陆成功正在跳转到主页...");
-                            setTimeout(function(){document.location = 'http://localhost:8080';}, 1000);
-                            break;
-                        }
-                        else {
-                            document.getElementById("reminder").innerHTML = combineMessage("alert-danger","邮箱或密码错误请重新输入");
-                            break;
-                        }
-                    case "/logout":
-                        document.getElementById("reminder").innerHTML = combineMessage("alert-success", "注销成功正在跳转到主页...");
-                        setTimeout(function(){document.location = 'http://localhost:8080';}, 1000);
-                        break;
-                    case "/message":
-                        document.getElementById("reminder").innerHTML = combineMessage("alert-success", "发送成功");
-                        break;
-                    default:
-                        document.getElementById("reminder").innerHTML = combineMessage("alert-success", "成功");
 
-                }
-            } else {
-                var httpHeader = xhr.getResponseHeader("Message");
-                switch (httpHeader) {
-                    case "DuplicateKeyException":
-                        document.getElementById("reminder").innerHTML = combineMessage("alert-danger", "邮箱已存在");
-                        break;
-                    default:
-                        document.getElementById("reminder").innerHTML = combineMessage("alert-danger", "错误");
-                }
-            }
-        }
-    };
-    //启动请求
-    xhr.open(method, uri, true);
-    //在open和send之间设置请求头
-    xhr.setRequestHeader("Content-Type", contentType);
-    //post方法里面需要加入csrfToken
-    xhr.setRequestHeader("X-CSRF-TOKEN", getCookie("X-CSRF-TOKEN"));
-    //发送数据到服务器
-    xhr.send(data);
-}
+// /**
+//  * ajax的公用方法
+//  * @param data
+//  * @param method
+//  */
+// function ajax(data, method, uri, contentType,func,xhr) {
+//     //需要在open()方法之前调用onreadystatechange事件，确保跨浏览器的兼容性
+//     xhr.onreadystatechange = func;
+//     //启动请求
+//     xhr.open(method, uri, true);
+//     //在open和send之间设置请求头
+//     xhr.setRequestHeader("Content-Type", contentType);
+//     //post方法里面需要加入csrfToken
+//     xhr.setRequestHeader("X-CSRF-TOKEN", getCookie("X-CSRF-TOKEN"));
+//     //发送数据到服务器
+//     xhr.send(data);
+// }
 
 /**
  * 序列化表单的公共方法
@@ -216,11 +175,4 @@ function loginState(){
             elements[i].className += " hidden";
         }
     }
-}
-
-/**
- * 注销用户
- */
-function logout() {
-    ajax("", "POST", "/logout", "application/x-www-form-urlencoded");
 }
