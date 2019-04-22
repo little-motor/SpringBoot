@@ -40,7 +40,7 @@
         <!-- 板式 -->
         <div class="jumbotron" style="margin-top: 5%">
             <!--用于提示一些信息的标签-->
-            <div id="reminder"></div>
+            <div id="tips"></div>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-4">
@@ -112,6 +112,7 @@
 
     <script src="foot.js"></script>
 
+</div>
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
@@ -121,20 +122,74 @@
 
     //向服务器发送json数据
     function register() {
+        var uri = "/register";
         //根据输入的内容初始化数据
         user.name = document.getElementById("name").value;
         user.email = document.getElementById("email").value;
         user.password = document.getElementById("password").value;
         console.log("string is: " + JSON.stringify(user));
         //向服务器发送数据
-        ajax(JSON.stringify(user), "POST", "/register", "application/json;charset=UTF-8");
+        ajax(JSON.stringify(user), "POST", uri, "application/json;charset=UTF-8");
     }
 
     /**
      * 注销用户
      */
     function logout() {
-        ajax("", "POST", "/logout", "application/x-www-form-urlencoded");
+        var uri = "/logout";
+        var xhr = new XMLHttpRequest();
+        ajax("", "POST", uri, "application/x-www-form-urlencoded");
+    }
+
+    /**
+     * ajax方法
+     * @param data
+     * @param method
+     */
+    function ajax(data, method, uri, contentType) {
+        var xhr = new XMLHttpRequest();
+        //需要在open()方法之前调用onreadystatechange事件，确保跨浏览器的兼容性
+        xhr.onreadystatechange = function () {
+            //状态从0-4，4表示接受了全部响应可以在客户端使用
+            if (xhr.readyState == 4) {
+                if ((xhr.status >= 200 && xhr.status <= 300) || xhr.status == 304) {
+                    //用于根据状态显示提示
+                    switch (uri) {
+
+                        case "/register":
+                            document.getElementById("tips").innerHTML = combineMessage("alert-success", "注册成功");
+                            break;
+
+                        case "/logout":
+                            document.getElementById("tips").innerHTML = combineMessage("alert-success", "注销成功正在跳转到主页...");
+                            setTimeout(function () {
+                                document.location = 'http://localhost:8080';
+                            }, 1000);
+                            break;
+
+                        default:
+                            document.getElementById("tips").innerHTML = combineMessage("alert-success", xhr.getResponseHeader("Message"));
+                    }
+                } else {
+                    var httpHeader = xhr.getResponseHeader("Message");
+                    switch (httpHeader) {
+                        case "DuplicateKeyException":
+                            document.getElementById("tips").innerHTML = combineMessage("alert-danger", "邮箱已存在");
+                            break;
+                        default:
+                            document.getElementById("tips").innerHTML = combineMessage("alert-danger", "错误");
+                    }
+                }
+            }
+        };
+        //启动请求
+        xhr.open(method, uri, true);
+        //在open和send之间设置请求头
+        xhr.setRequestHeader("Content-Type", contentType);
+        //post方法里面需要加入csrfToken
+        xhr.setRequestHeader("X-CSRF-TOKEN", getCookie("X-CSRF-TOKEN"));
+        //发送数据到服务器
+        xhr.send(data);
     }
 </script>
 </body>
