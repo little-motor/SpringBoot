@@ -22,7 +22,7 @@
     <script src="basicMethod.js"></script>
     <link rel="stylesheet" type="text/css" href="basicStyle.css">
 </head>
-<body onload="loginState();getMessage()">
+<body onload="loginState();getMessages()">
 
 <!--显示页头-->
 <script src="head.js"></script>
@@ -38,7 +38,7 @@
                 <div id="tips"></div>
                 <form>
                     <div class="form-group">
-                        <textarea id="content" class="form-control" rows="10"></textarea>
+                        <textarea id="messageData" class="form-control" rows="10"></textarea>
                     </div>
                 </form>
                 <button onclick="submit()" type="submit" class="btn btn-default">
@@ -61,16 +61,81 @@
 
 
 <script>
+
+    /**
+     * 主页加载完成后获取用法的message列表，并调用showMessageList方法
+     */
+    function getMessages(){
+        ajax(null, "GET", "/message/getMessages", null);
+    }
+
+    /**
+     * 在页面显示用户已经发送的消息
+     */
+    function showMessageList(responseText) {
+        if (responseText != null){
+            var list = JSON.parse(responseText);
+            //循环遍历显示列表，目前最多显示最近的5个元素
+            for(var index = 0; ((index < list.length)); index++){
+                //注意messageData有null的情况
+                if(list[index].messageData != null){
+                    //逐个显示messageData和日期
+                    var postedMessages = document.getElementById("postedMessages");
+
+                    //创建media div元素
+                    var createDivMedia = document.createElement("div");
+                    createDivMedia.className = "media";
+
+                    //创建media-left div元素
+                    var createDivMediaLeft = document.createElement("div");
+                    createDivMediaLeft.className = "media-left";
+                    var createH = document.createElement("h2")
+                    var elementDateTime = document.createTextNode(list[index].createDate);
+                    console.log(elementDateTime.valueOf());
+                    createH.appendChild(elementDateTime);
+                    createDivMediaLeft.appendChild(createH);
+
+                    //创建media-body元素
+                    var createDivMediaBody = document.createElement("div");
+                    createDivMediaBody.className = "media-body";
+                    createH = document.createElement("h5");
+                    var elementMessage = document.createTextNode(list[index].messageData);
+                    console.log(elementMessage.valueOf());
+                    createH.appendChild(elementMessage);
+                    createDivMediaBody.appendChild(createH);
+
+                    createDivMedia.appendChild(createDivMediaLeft);
+                    createDivMedia.appendChild(createDivMediaBody);
+                    postedMessages.appendChild(createDivMedia);
+                }
+            }
+            console.log("数组大小：" + list.length);
+        }
+
+        /**
+         * <div class="media">
+         <div class="media-left">
+         <a href="#">
+         <img class="media-object" src="..." alt="...">
+         </a>
+         </div>
+         <div class="media-body">
+         <h4 class="media-heading">Media heading</h4>
+         ...
+         </div>
+         </div>
+         */
+    }
+
     /**
      * 发送text内容
-
      */
     function submit() {
         var uri = "/message";
         message.userId = getCookie("userId");
-        message.message = document.getElementById("content").value;
+        message.messageData = document.getElementById("messageData").value;
         //向服务器发送数据
-        ajax(JSON.stringify(message), "POST", uri, "application/json;charset=UTF-8",tips(uri));
+        ajax(JSON.stringify(message), "POST", uri, "application/json;charset=UTF-8");
     }
 
     /**
@@ -103,8 +168,8 @@
 
                         //返回已发送的消息列表
                         case "/message/getMessages":
-                            console.log(xhr.responseText)
-                            //document.getElementById("postedMessages").innerHTML = ;
+                            console.log(xhr.responseText);
+                            showMessageList(xhr.responseText);
                             break;
 
                         case "/logout":
@@ -134,14 +199,6 @@
         //发送数据到服务器
         xhr.send(data);
     }
-
-    /**
-     * 获取该用户已经发送的消息
-     */
-    function getMessage() {
-
-    }
-
 
 </script>
 </body>
