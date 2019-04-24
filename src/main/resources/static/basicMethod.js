@@ -44,7 +44,7 @@ var user = {
  */
 var message = {
     userId: undefined,
-    message: undefined,
+    messageData: undefined,
     likeNum: undefined,
     comments: undefined
 };
