@@ -1,5 +1,6 @@
 package cn.littlemotor.web.model.service.content;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -19,6 +20,8 @@ public class Message {
     private int likeNum = 0;
     //评论列表
     private List<Comment> comments = null;
+    //发表时间
+    private Timestamp createDate = null;
 
     public Message(){
     }
@@ -61,6 +64,14 @@ public class Message {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Timestamp getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
     }
 
     @Override
