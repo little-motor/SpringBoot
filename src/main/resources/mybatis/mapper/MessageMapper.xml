@@ -17,7 +17,8 @@
         FROM message
         LEFT JOIN `comment` ON `comment`.message_id=message.id
         LEFT JOIN `like` ON `like`.message_id=message.id
-        WHERE message.user_id=#{userId};
+        WHERE message.user_id=#{userId}
+        order by message.id desc ;
     </select>
 
     <!--用于返回message实例列表的resultMap-->
