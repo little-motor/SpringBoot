@@ -3,6 +3,26 @@
 /*@date 19.4.13*/
 
 #message-textArea {
-    margin-top: 8%;
-    margin-bottom: 18%;
+    /*margin-top: 8%;*/
+    margin-bottom: 30px;
 }
+
+#postedMessages{
+    margin-top: 60px;
+    margin-bottom: 25px;
+}
+
+/*爱心iocn位置*/
+.glyphicon-heart{
+    margin-left: 75%;
+}
+
+/*评论icon位置*/
+.glyphicon-comment{
+    margin-left: 3%;
+}
+
+a:link {text-decoration:none;color:inherit;}		/* 未被访问的链接 */
+a:visited {text-decoration:none;color:inherit;}	/* 已被访问的链接 */
+a:hover {text-decoration:none;color:inherit;}	/* 鼠标指针移动到链接上 */
+a:active {text-decoration:none;color:inherit;}	/* 正在被点击的链接 */
