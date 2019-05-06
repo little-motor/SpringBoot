@@ -93,42 +93,50 @@
                     //创建media-left div元素
                     var createDivMediaLeft = document.createElement("div");
                     createDivMediaLeft.className = "media-left";
-                    var createH = document.createElement("h2")
+                    var createLeftTextNode = document.createElement("h2")
                     //日期
                     var elementDateTime = document.createTextNode(new Date(list[index].createDate).toLocaleDateString().replace(/2019\//, ""));
                     console.log(elementDateTime.valueOf());
-                    createH.appendChild(elementDateTime);
-                    createDivMediaLeft.appendChild(createH);
+                    createLeftTextNode.appendChild(elementDateTime);
+                    createDivMediaLeft.appendChild(createLeftTextNode);
 
                     //创建media-body元素
                     var createDivMediaBody = document.createElement("div");
                     createDivMediaBody.className = "media-body";
                     createDivMediaBody.id = list[index].messageId;
-                    createH = document.createElement("h4");
+                    var createBodyTextNode = document.createElement("h4");
                     //消息
                     var elementMessage = document.createTextNode(list[index].messageData);
                     console.log(elementMessage.valueOf());
-                    createH.appendChild(elementMessage);
+                    createBodyTextNode.appendChild(elementMessage);
                     //爱心icon标签
                     var createIconHeart = document.createElement("span");
-                    createIconHeart.className = "glyphicon glyphicon-heart";
-                    createIconHeart.addEventListener("click", like.bind(this));
-                    var elementLikeNum = document.createTextNode(" " + list[index].likeNum);
+                    createIconHeart.className = "glyphicon glyphicon-heart-empty";
+                    //点赞函数只会执行一次
+                    createIconHeart.addEventListener("click", like.bind(this), {once: true});
+                    var createHeartNumNode = document.createElement("span");
+                    createHeartNumNode.className = "likeNum";
+                    var elementLikeNum = document.createTextNode(list[index].likeNum);
+                    createHeartNumNode.appendChild(elementLikeNum);
                     //评论icon标签
                     var createIconComment = document.createElement("span");
                     createIconComment.className = "glyphicon glyphicon-comment";
-                    var commentNum = " 0";
+                    var commentNum = 0;
                     if ((list[index].comments.length == 1) && (list[index].comments[0].commentData == null)) {
-                        commentNum = " " + 0;
+                        commentNum = 0;
                     } else {
-                        commentNum = " " + list[index].comments.length;
+                        commentNum = list[index].comments.length;
                     }
+                    var createCommentNumNode = document.createElement("span");
+                    createCommentNumNode.className = "commentNum";
                     var elementCommentNum = document.createTextNode(commentNum);
-                    createDivMediaBody.appendChild(createH);
+                    createCommentNumNode.appendChild(elementCommentNum);
+
+                    createDivMediaBody.appendChild(createBodyTextNode);
                     createDivMediaBody.appendChild(createIconHeart);
-                    createDivMediaBody.appendChild(elementLikeNum);
+                    createDivMediaBody.appendChild(createHeartNumNode);
                     createDivMediaBody.appendChild(createIconComment);
-                    createDivMediaBody.appendChild(elementCommentNum);
+                    createDivMediaBody.appendChild(createCommentNumNode);
 
                     //组装
                     createDivMedia.appendChild(createDivMediaLeft);
@@ -165,21 +173,34 @@
         ajax(JSON.stringify(message), "POST", uri, "application/json;charset=UTF-8");
     }
 
-    var test
+    var test;
+
+    /**
+     * 点赞对象用于like函数
+     */
+    var likeObj = {
+        likeNum: undefined,
+        messageId: undefined
+    };
+
     /**
      * 点赞功能
      */
     function like(element) {
         test = element;
+        likeObj.likeNum = parseInt(element.target.nextSibling.textContent) + 1;
+        element.target.nextSibling.innerText = likeObj.likeNum;
+        likeObj.messageId = parseInt(element.target.parentElement.id);
+        ajax(JSON.stringify(likeObj), "POST", "/message/like","application/json;charset=UTF-8")
         console.log(element);
         alert("like");
     }
+
     /**
      * 注销用户
      */
     function logout() {
         var uri = "/logout";
-        var xhr = new XMLHttpRequest();
         ajax("", "POST", uri, "application/x-www-form-urlencoded");
     }
 
@@ -209,6 +230,12 @@
                         case "/message/getMessages":
                             console.log(xhr.responseText);
                             showMessageList(xhr.responseText);
+                            break;
+
+                        //点赞后空心图标变为实心
+                        case "/message/like":
+                            var node = document.getElementById(JSON.parse(data).messageId);
+                            node.getElementsByClassName("glyphicon-heart-empty")[0].className="glyphicon glyphicon-heart"
                             break;
 
                         case "/logout":
