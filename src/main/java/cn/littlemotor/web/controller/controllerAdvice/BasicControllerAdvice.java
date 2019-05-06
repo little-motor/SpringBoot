@@ -1,5 +1,6 @@
 package cn.littlemotor.web.controller.controllerAdvice;
 
+import cn.littlemotor.web.controller.basicMethod.CookieMethod;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,8 +47,8 @@ public class BasicControllerAdvice {
     @ModelAttribute
     public void setCookie(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         //System.out.println("intercept cookie");
-        UserCookie userCookie = new UserCookie(httpServletRequest);
-        List<Cookie> cookieList = userCookie.getCookieList();
+        CookieMethod cookieMethod = new CookieMethod(httpServletRequest);
+        List<Cookie> cookieList = cookieMethod.getCookieList();
         for (Cookie cookie : cookieList){
             cookie.setPath("/");
             httpServletResponse.addCookie(cookie);
