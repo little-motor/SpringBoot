@@ -31,6 +31,7 @@
         <typeAlias type="cn.littlemotor.web.model.service.user.UserLogin" alias="UserLogin"/>
         <typeAlias type="cn.littlemotor.web.model.service.content.Message" alias="Message"/>
         <typeAlias type="cn.littlemotor.web.model.service.content.Comment" alias="Comment"/>
+        <typeAlias type="cn.littlemotor.web.model.service.content.Like" alias="Like"/>
     </typeAliases>
 
     <!-- 数据库环境 -->
@@ -51,6 +52,7 @@
     <mappers>
         <mapper resource="mybatis/mapper/UserMapper.xml"/>
         <mapper resource="mybatis/mapper/MessageMapper.xml"/>
+        <mapper resource="mybatis/mapper/LikeMapper.xml"/>
     </mappers>
 
 </configuration>

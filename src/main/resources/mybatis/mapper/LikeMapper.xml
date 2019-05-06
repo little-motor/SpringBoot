@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.littlemotor.web.model.dao.LikeDao">
+
+    <!--存储点赞数-->
+    <insert id="insertLikeNum" useGeneratedKeys="true" keyProperty="likeId" parameterType="Like">
+        INSERT INTO `like` (id,like_num,message_id)
+        VALUES (#{likeId},#{likeNum},#{messageId})
+        ON DUPLICATE KEY UPDATE like_num = VALUES(like_num);
+    </insert>
+
+    <!--&lt;!&ndash;当用户发送的消息插入message表后，修改user_message中间表&ndash;&gt;-->
+    <!--<insert id="insertUserMessage" useGeneratedKeys="true" keyProperty="id" parameterType="Message">-->
+    <!--insert into user_message(`user_id`,`message_id`) values (#{userId},#{messageId});-->
+    <!--</insert>-->
+
+    <!--<select id="getMessage" parameterType="int" resultMap="messageList">-->
+        <!--SELECT message.id as "message_id",message.user_id,message.message_data,`comment`.id as "comment_id",`comment`.comment_data,`like`.like_num,message.create_date-->
+        <!--FROM message-->
+        <!--LEFT JOIN `comment` ON `comment`.message_id=message.id-->
+        <!--LEFT JOIN `like` ON `like`.message_id=message.id-->
+        <!--WHERE message.user_id=#{userId}-->
+        <!--order by message.id desc;-->
+    <!--</select>-->
+
+    <!--&lt;!&ndash;用于返回message实例列表的resultMap&ndash;&gt;-->
+    <!--<resultMap id="messageList" type="Message">-->
+        <!--<id property="messageId" column="message_id"></id>-->
+        <!--<result property="userId" column="user_id"></result>-->
+        <!--<result property="messageData" column="message_data"></result>-->
+        <!--<result property="likeNum" column="like_num"></result>-->
+        <!--<result property="createDate" column="create_date"></result>-->
+        <!--<collection property="comments" javaType="ArrayList" ofType="Comment">-->
+            <!--<id property="commentId" column="comment_id"></id>-->
+            <!--<result property="messageId" column="message_id"></result>-->
+            <!--<result property="commentData" column="comment_data"></result>-->
+        <!--</collection>-->
+    <!--</resultMap>-->
+</mapper>
