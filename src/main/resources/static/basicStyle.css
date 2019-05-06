@@ -13,13 +13,17 @@
 }
 
 /*爱心iocn位置*/
-.glyphicon-heart{
+.glyphicon-heart,.glyphicon-heart-empty {
     margin-left: 75%;
 }
 
 /*评论icon位置*/
 .glyphicon-comment{
     margin-left: 3%;
+}
+
+#postedMessages span.likeNum,span.commentNum{
+    margin-left: 1.5%;
 }
 
 a:link {text-decoration:none;color:inherit;}		/* 未被访问的链接 */
