@@ -13,7 +13,9 @@
     <!--</insert>-->
 
     <select id="getMessage" parameterType="int" resultMap="messageList">
-        SELECT message.id as "message_id",message.user_id,message.message_data,`comment`.id as "comment_id",`comment`.comment_data,`like`.like_num,message.create_date
+        SELECT message.id as "message_id",message.user_id,message.message_data,message.message_create_date,
+        `comment`.id as "comment_id",`comment`.comment_data,`comment`.user_id,`comment`.user_name,`comment`.comment_create_date,`comment`.has_comment,
+        `like`.like_num
         FROM message
         LEFT JOIN `comment` ON `comment`.message_id=message.id
         LEFT JOIN `like` ON `like`.message_id=message.id
@@ -27,11 +29,16 @@
         <result property="userId" column="user_id"></result>
         <result property="messageData" column="message_data"></result>
         <result property="likeNum" column="like_num"></result>
-        <result property="createDate" column="create_date"></result>
+        <result property="messageCreateDate" column="message_create_date"></result>
         <collection property="comments" javaType="ArrayList" ofType="Comment">
             <id property="commentId" column="comment_id"></id>
             <result property="messageId" column="message_id"></result>
             <result property="commentData" column="comment_data"></result>
+            <result property="userId" column="user_id"></result>
+            <result property="userName" column="user_name"></result>
+            <result property="commentCreateDate" column="comment_create_date"></result>
         </collection>
     </resultMap>
+
+
 </mapper>
