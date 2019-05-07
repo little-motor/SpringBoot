@@ -1,9 +1,19 @@
 package cn.littlemotor.web.model.service.content;
 
+import java.sql.Timestamp;
+
+/**
+ * 用户评论POJO
+ * @author littlemotor
+ * @date 19.5.6
+ */
 public class Comment {
     private int commentId;
     private int messageId;
     private String commentData = null;
+    private int userId;
+    private String userName = null;
+    private Timestamp commentCreateDate = null;
 
     public int getCommentId() {
         return commentId;
@@ -27,5 +37,29 @@ public class Comment {
 
     public void setCommentData(String commentData) {
         this.commentData = commentData;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Timestamp getCommentCreateDate() {
+        return commentCreateDate;
+    }
+
+    public void setCommentCreateDate(Timestamp commentCreateDate) {
+        this.commentCreateDate = commentCreateDate;
     }
 }
