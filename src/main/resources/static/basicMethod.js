@@ -38,16 +38,7 @@ var user = {
     rememberMe: undefined
 };
 
-/**
- * 定义发送message的对象，在JSON序列化过程中null的消息会自动被去除
- * @type {{content: undefined}}
- */
-var message = {
-    userId: undefined,
-    messageData: undefined,
-    likeNum: undefined,
-    comments: undefined
-};
+
 
 /**
  * 负责组合提示的消息，其中reminderState传递提示的状态（可选的有alert-success、alert-info、alert-warning、alert-danger）
