@@ -21,7 +21,7 @@ public class Message {
     //评论列表
     private List<Comment> comments = null;
     //发表时间
-    private Timestamp createDate = null;
+    private Timestamp messageCreateDate = null;
 
     public Message(){
     }
@@ -63,15 +63,18 @@ public class Message {
     }
 
     public void setComments(List<Comment> comments) {
+//        if(comments.size() != 0){
+//            this.comments = comments;
+//        }
         this.comments = comments;
     }
 
-    public Timestamp getCreateDate() {
-        return createDate;
+    public Timestamp getMessageCreateDate() {
+        return messageCreateDate;
     }
 
-    public void setCreateDate(Timestamp createDate) {
-        this.createDate = createDate;
+    public void setMessageCreateDate(Timestamp messageCreateDate) {
+        this.messageCreateDate = messageCreateDate;
     }
 
     @Override
