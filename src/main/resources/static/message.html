@@ -30,14 +30,14 @@
 <!--中间部分-->
 <div class="container-fluid">
 
-    <div class="col-md-3 col-md-offset-4">
+    <div class="col-md-6 col-md-offset-3">
         <!--显示已发送的消息-->
         <div id="postedMessages"></div>
     </div>
 
     <div id="message-textArea">
         <div class="row">
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-6 col-md-offset-3">
                 <div id="tips"></div>
                 <form>
                     <div class="form-group">
@@ -86,33 +86,19 @@
         ajax(null, "GET", "/message/getMessages", null);
     }
 
-    /**
-     * 发送message内容
-     */
-    function submitMessage() {
-        var postMessage = {
-            userId: undefined,
-            messageData: undefined
-        };
-        var uri = "/message";
-        postMessage.userId = getCookie("userId");
-        postMessage.messageData = document.getElementById("messageData").value;
-        //向服务器发送数据
-        ajax(JSON.stringify(postMessage), "POST", uri, "application/json;charset=UTF-8");
-    }
+
 
     /**
-     * 在页面显示用户已经发送的消息
+     * 在页面显示用户已经发送的消息以及评论列表信息
      */
     function showMessageList(responseText) {
         if (responseText != null) {
             message = JSON.parse(responseText);
             //循环遍历显示列表，目前最多显示最近的5个元素
-            //
             for (var index = 0; ((index < message.length) && index < 5) ; index++) {
                 //注意messageData有null的情况
                 if (message[index].messageData != null) {
-                    //逐个显示messageData和日期
+                    //postedMessages包含5个media节点，每个media节点包括message、comment等信息
                     var postedMessages = document.getElementById("postedMessages");
 
                     //创建media div元素
@@ -121,8 +107,8 @@
 
                     //创建media-left div元素
                     var createDivMediaLeft = document.createElement("div");
-                    createDivMediaLeft.className = "media-left";
-                    var createLeftTextNode = document.createElement("h2")
+                    createDivMediaLeft.className = "media-left col-md-3";
+                    var createLeftTextNode = document.createElement("h1")
                     //日期注意传过来的是时间戳转换为本地时间
                     var elementDateTime = document.createTextNode(new Date(message[index].messageCreateDate).toLocaleDateString().replace(/2019\//, ""));
                     console.log(elementDateTime.valueOf());
@@ -133,7 +119,7 @@
                     var createDivMediaBody = document.createElement("div");
                     createDivMediaBody.className = "media-body";
                     createDivMediaBody.id = message[index].messageId;
-                    var createBodyTextNode = document.createElement("h4");
+                    var createBodyTextNode = document.createElement("h3");
                     //消息
                     var elementMessage = document.createTextNode(message[index].messageData);
                     console.log(elementMessage.valueOf());
@@ -150,7 +136,7 @@
                     //评论icon标签
                     var createIconComment = document.createElement("span");
                     createIconComment.className = "glyphicon glyphicon-comment";
-                    //绑定评论相关的函数
+                    //绑定评论函数
                     createIconComment.addEventListener("click", unFold.bind(this), {once: true});
                     var commentNum = 0;
                     if ((message[index].comments.length == 1) && (message[index].comments[0].commentData == null)) {
@@ -170,51 +156,19 @@
                     createDivMediaBody.appendChild(createCommentNumNode);
 
                     //整体组装
+                    //组装左部日期
                     createDivMedia.appendChild(createDivMediaLeft);
+                    //组装右部message
                     createDivMedia.appendChild(createDivMediaBody);
-
-                    //评论列表
-                    if(message[index].comments[0].commentData != null) {
-                        for (var commentIndex = 0; commentIndex < message[index].comments.length; commentIndex++) {
-                            //单个完整的评论节点
-                            var createCommentNode = document.createElement("div");
-                            createCommentNode.className = "panel panel-default";
-                            //panel-heading，包括用户名和评论时间
-                            var createPanelHeadingNode = document.createElement("div");
-                            createPanelHeadingNode.className = "panel-heading";
-                            //用户名节点
-                            var createUserNameNode = document.createElement("div");
-                            createUserNameNode.className = "col-sm-1";
-                            var elementUserName = document.createTextNode(message[index].comments[commentIndex].userName);
-                            createUserNameNode.appendChild(elementUserName);
-                            //评论时间节点
-                            var createCommentDateNode = document.createElement("div");
-                            createCommentDateNode.className = "col-sm-offset-6";
-                            var elementCommentDate = document.createTextNode(message[index].comments[commentIndex].commentCreateDate);
-                            createCommentDateNode.appendChild(elementCommentDate);
-                            createPanelHeadingNode.appendChild(createUserNameNode);
-                            createPanelHeadingNode.appendChild(createCommentDateNode);
-
-                            //panel-body
-                            var createPanelBodyNode = document.createElement("div");
-                            createPanelBodyNode.className = "panel-body";
-                            var elementCommentData = document.createTextNode(message[index].comments[commentIndex].commentData);
-                            createPanelBodyNode.appendChild(elementCommentData);
-
-                            //组装panel-heading和panel-body
-                            createCommentNode.appendChild(createPanelHeadingNode);
-                            createCommentNode.appendChild(createPanelBodyNode);
-
-                            //整体组装评论
-                            createDivMedia.appendChild(createCommentNode);
-                        }
-                    }
-
+                    //组装下部评论,默认隐藏
+                    createDivMedia = appendComment(message[index].comments,createDivMedia);
+                    //将组装好的单个media节点装入postedMessages
                     postedMessages.appendChild(createDivMedia);
                 }
             }
             console.log("数组大小：" + message.length);
         }
+
 
         /**
          * <div class="media">
@@ -229,7 +183,6 @@
          </div>
          </div>
          */
-
 
 
     }
@@ -256,29 +209,37 @@
         likeObj.messageId = parseInt(element.target.parentElement.id);
         ajax(JSON.stringify(likeObj), "POST", "/message/like","application/json;charset=UTF-8")
         console.log(element);
-        alert("like");
+        //alert("like");
     }
 
+
     /**
-     * 评论对象用于comment函数
+     * 展开评论列表
      */
-    // var commentObj = {
-    //     commentId: undefined,
-    //     messageId: undefined,
-    //     commentData: undefined,
-    //     userId: undefined,
-    //     userName: undefined,
-    //     createDate: undefined
-    // };
+    function unFold(element) {
+        element.target.parentElement.nextElementSibling.className="comment";
+        //展开
+        //alert("展开");
+        element.target.addEventListener("click", fold.bind(this), {once: true});
+    }
+
+
 
     /**
      * 预处理评论列表，默认隐藏
      */
-    function prepareComment(preNode,comments) {
-        var node = null
-        //除去无用元素
-        if(comments[0].commentData != null){
-            for(var index = 0; index < comments.length; index++){
+    function appendComment(commentData,createDivMedia) {
+
+        var createCommentList = document.createElement("div");
+        createCommentList.className = "comment hidden";
+
+        //已评论列表
+        if(commentData[0].commentData != null) {
+            for (var commentIndex = 0; commentIndex < commentData.length; commentIndex++) {
+                //用于删除评论之后的提示消息
+                var createCommentTipsNode = document.createElement("div");
+                createCommentTipsNode.className = "commentTips";
+
                 //单个完整的评论节点
                 var createCommentNode = document.createElement("div");
                 createCommentNode.className = "panel panel-default";
@@ -287,32 +248,75 @@
                 createPanelHeadingNode.className = "panel-heading";
                 //用户名节点
                 var createUserNameNode = document.createElement("div");
-                createUserNameNode.className = "col-sm-1";
-                var elementUserName = document.createTextNode(comments[index].userName);
+                createUserNameNode.className = "col-md-3";
+                var elementUserName = document.createTextNode(commentData[commentIndex].userName);
                 createUserNameNode.appendChild(elementUserName);
                 //评论时间节点
                 var createCommentDateNode = document.createElement("div");
-                createCommentDateNode.className = "col-sm-offset-6";
-                var elementCommentDate = document.createTextNode(comments[index].commentCreateDate);
+                createCommentDateNode.className = "col-md-offset-10";
+                var elementCommentDate = document.createTextNode(new Date(commentData[commentIndex].commentCreateDate).toLocaleDateString());
                 createCommentDateNode.appendChild(elementCommentDate);
                 createPanelHeadingNode.appendChild(createUserNameNode);
                 createPanelHeadingNode.appendChild(createCommentDateNode);
 
-                //panel-body
+                //评论的具体内容
                 var createPanelBodyNode = document.createElement("div");
                 createPanelBodyNode.className = "panel-body";
-                var elementCommentData = document.createTextNode(comments[index].commentData);
+                createPanelBodyNode.id = commentData[commentIndex].commentId;
+                var elementCommentData = document.createTextNode(commentData[commentIndex].commentData);
                 createPanelBodyNode.appendChild(elementCommentData);
+                //删除按键，注意判断用户
+                if(commentData[commentIndex].userId == getCookie("userId")){
+                    var createCommentDeleteNode = document.createElement("a");
+                    createCommentDeleteNode.setAttribute("onclick", "deleteComment(this)");
+                    createCommentDeleteNode.className = "pull-right";
+                    var elementCommentDeleteData = document.createTextNode("删除");
+                    createCommentDeleteNode.appendChild(elementCommentDeleteData);
+                    createPanelBodyNode.appendChild(createCommentDeleteNode);
+                }
 
                 //组装panel-heading和panel-body
                 createCommentNode.appendChild(createPanelHeadingNode);
                 createCommentNode.appendChild(createPanelBodyNode);
+
+                //组装已评论信息
+                createCommentList.appendChild(createCommentTipsNode);
+                createCommentList.appendChild(createCommentNode);
             }
-
-
         }
 
+        //评论输入框
+        var createInputNode = document.createElement("input");
+        createInputNode.setAttribute("type", "text");
+        createInputNode.className = "form-control";
 
+        //用于发送评论之后的提示消息
+        var createCommentTipsNode = document.createElement("div");
+        createCommentTipsNode.className = "commentTips";
+
+        //form-group div
+        var createFormGroupNode = document.createElement("div");
+        createFormGroupNode.className = "form-group";
+        createFormGroupNode.appendChild(createInputNode);
+
+        //评论按钮
+        var createButtonNode = document.createElement("button");
+        createButtonNode.setAttribute("type", "button");
+        createButtonNode.className = "btn btn-success pull-right";
+        var createButtonNameNode = document.createTextNode("评论");
+        createButtonNode.appendChild(createButtonNameNode);
+        createButtonNode.addEventListener("click",submitComment.bind(this))
+
+        //评论form表组装
+        var createCommentAreaNode = document.createElement("form");
+        createCommentAreaNode.appendChild(createCommentTipsNode);
+        createCommentAreaNode.appendChild(createFormGroupNode);
+        createCommentAreaNode.appendChild(createButtonNode);
+
+        createCommentList.appendChild(createCommentAreaNode);
+        createDivMedia.appendChild(createCommentList);
+
+        //已评论列表
         // <div class="hidden panel panel-default">
         //     <div class="panel-heading">
         //         <div class="col-sm-1">name</div>
@@ -322,34 +326,76 @@
         //         comment
         //     </div>
         // </div>
+
+        //评论输入框
+        // <form>
+        //
+        //     <div class="form-group">
+        //
+        //         <input type="text" class="form-control">
+        //         </div>
+        //         <button type="button" class="btn btn-success pull-right">默认按钮</button>
+        //
+        //         </form>
+
+
+        return createDivMedia;
     }
 
+    /**
+     * 评论对象用于comment函数
+     */
+    function createCommentObj(messageId,CommentData,userId,userName){
+        this.messageId = messageId;
+        this.commentData = CommentData;
+        this.userId = userId;
+        this.userName = userName;
+    };
 
     /**
-     * 展开评论列表
+     * 用于发送新的评论
      */
-    function unFold(element) {
-        //展开
-        alert("展开");
-        element.target.addEventListener("click", fold.bind(this), {once: true});
+    function submitComment(comment) {
+        var messageId = parseInt(comment.target.parentElement.parentElement.previousElementSibling.id);
+        var commentData = comment.target.previousElementSibling.firstChild.value;
+        var userId = getCookie("userId");
+        var userName = getCookie("userName");
+        var value = new createCommentObj(messageId, commentData, userId, userName);
+        ajax(JSON.stringify(value), "POST", "/comment", "application/json;charset=UTF-8");
+        console.log(comment);
+    }
+
+    /**
+     * 用于删除选定的评论
+     */
+    function deleteComment(node) {
+        test = node;
+        var id = "id=" + node.parentElement.id;
+        ajax(id, "DELETE", "/comment", "application/x-www-form-urlencoded;charset=UTF-8");
     }
 
     /**
      * 折叠评论列表
      */
     function fold(element) {
-        alert("折叠");
+        element.target.parentElement.nextElementSibling.className="comment hidden";
+        //alert("折叠");
         element.target.addEventListener("click", unFold.bind(this), {once: true});
     }
 
-
-
     /**
-     * 注销用户
+     * 发送message内容
      */
-    function logout() {
-        var uri = "/logout";
-        ajax("", "POST", uri, "application/x-www-form-urlencoded");
+    function submitMessage() {
+        var postMessage = {
+            userId: undefined,
+            messageData: undefined
+        };
+        var uri = "/message";
+        postMessage.userId = getCookie("userId");
+        postMessage.messageData = document.getElementById("messageData").value;
+        //向服务器发送数据
+        ajax(JSON.stringify(postMessage), "POST", uri, "application/json;charset=UTF-8");
     }
 
     /**
@@ -357,7 +403,7 @@
      * @param data
      * @param method
      */
-    function ajax(data, method, uri, contentType) {
+    function ajax(data, method, uri, contentType,node) {
         var xhr = new XMLHttpRequest();
         //需要在open()方法之前调用onreadystatechange事件，确保跨浏览器的兼容性
         xhr.onreadystatechange = function () {
@@ -386,6 +432,17 @@
                             node.getElementsByClassName("glyphicon-heart-empty")[0].className="glyphicon glyphicon-heart"
                             break;
 
+                        //评论相关的操作
+                        case "/comment":
+                            //发送评论操作
+                            if(method == "POST"){
+                            }
+                            //删除评论操作
+                            if(method == "DELETE"){
+
+                            }
+                            break;
+
                         case "/logout":
                             document.getElementById("tips").innerHTML = combineMessage("alert-success", "注销成功正在跳转到主页...");
                             setTimeout(function () {
@@ -404,7 +461,7 @@
         };
         //启动请求
         xhr.open(method, uri, true);
-        if (method == "POST") {
+        if (method == "POST" || method == "DELETE") {
             //在open和send之间设置请求头
             xhr.setRequestHeader("Content-Type", contentType);
             //post方法里面需要加入csrfToken
