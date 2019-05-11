@@ -14,7 +14,7 @@
     <!--insert into user_message(`user_id`,`message_id`) values (#{userId},#{messageId});-->
     <!--</insert>-->
 
-    <!--<select id="getMessage" parameterType="int" resultMap="messageList">-->
+    <!--<select id="getMessage" parameterType="int" resultMap="message">-->
         <!--SELECT message.id as "message_id",message.user_id,message.message_data,`comment`.id as "comment_id",`comment`.comment_data,`like`.like_num,message.create_date-->
         <!--FROM message-->
         <!--LEFT JOIN `comment` ON `comment`.message_id=message.id-->
@@ -24,7 +24,7 @@
     <!--</select>-->
 
     <!--&lt;!&ndash;用于返回message实例列表的resultMap&ndash;&gt;-->
-    <!--<resultMap id="messageList" type="Message">-->
+    <!--<resultMap id="message" type="Message">-->
         <!--<id property="messageId" column="message_id"></id>-->
         <!--<result property="userId" column="user_id"></result>-->
         <!--<result property="messageData" column="message_data"></result>-->
