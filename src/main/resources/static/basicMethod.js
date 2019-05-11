@@ -55,7 +55,7 @@ function combineMessage(state, content) {
 }
 
 /**
- * 根据cookie的key获取相应的value，注意区分只有一个cookie的情况
+ * 根据cookie的key获取相应的value
  * @param key
  * @returns {string}
  */
@@ -94,6 +94,8 @@ function getCookie(key) {
 //     //发送数据到服务器
 //     xhr.send(data);
 // }
+
+
 
 /**
  * 序列化表单的公共方法
@@ -166,4 +168,12 @@ function loginState(){
             elements[i].className += " hidden";
         }
     }
+}
+
+/**
+ * 注销用户
+ */
+function logout() {
+    var uri = "/logout";
+    ajax("", "POST", uri, "application/x-www-form-urlencoded");
 }
