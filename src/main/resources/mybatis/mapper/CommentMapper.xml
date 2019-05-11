@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.littlemotor.web.model.dao.LikeDao">
+<mapper namespace="cn.littlemotor.web.model.dao.CommentDao">
 
     <!--用于处理评论-->
     <insert id="insertComment" useGeneratedKeys="true" keyProperty="commentId" parameterType="Comment">
---         INSERT INTO `like` (id,like_num,message_id)
---         VALUES (#{likeId},#{likeNum},#{messageId})
---         ON DUPLICATE KEY UPDATE like_num = VALUES(like_num);
+        INSERT INTO `comment` (comment_data,message_id,user_id,user_name)
+        VALUES (#{commentData},#{messageId},#{userId},#{userName});
     </insert>
+
+    <!--删除特定的评论-->
+    <delete id="deleteComment" parameterType="_int">
+        DELETE FROM `comment`
+        WHERE id = #{id};
+    </delete>
 
 </mapper>

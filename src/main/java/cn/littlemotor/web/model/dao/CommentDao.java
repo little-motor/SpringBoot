@@ -19,4 +19,11 @@ public interface CommentDao {
      * @param comment
      */
     public void insertComment(Comment comment);
+
+    /**
+     * 删除用户评论
+     * web.controller.CommentController
+     * @param id
+     */
+    public void deleteComment(int id);
 }
