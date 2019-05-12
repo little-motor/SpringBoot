@@ -37,3 +37,7 @@ a:active {text-decoration:none;color:inherit;}	/* 正在被点击的链接 */
     color: #929496;
     cursor: pointer;
 }
+
+.commentTips {
+    margin-top: 22px;
+}
