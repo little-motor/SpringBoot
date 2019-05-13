@@ -30,10 +30,6 @@ public class CommentController {
         System.out.println("delete id:" + id);
     }
 
-    @GetMapping(path = "/message/comment")
-    public void getComments(){
-
-    }
 
 
 
