@@ -63,7 +63,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="createCSRFToken(),loginStateCheck()">
 <div class="container">
     <div class="row">
         <!--用于提示一些信息的标签-->
@@ -73,20 +73,21 @@
         <div class="col-md-offset-3 col-md-6">
             <div class="form-signin">
                 <h2 class="form-signin-heading">Please sign in</h2>
-                <form method="post" id="form">
+                <form method="post" id="form" action="/login">
                     <p>
                         <input type="email" class="form-control" id="email" placeholder="支持邮箱登陆" name="username"/>
                     </p>
                     <p>
                         <input type="password" class="form-control" id="password" placeholder="密　码" name="password"/>
                     </p>
+                    <!--<p>-->
+                        <!--<input type="checkbox" value="remember" id="checkbox" name="remember-me"/>Remember Me-->
+                    <!--</p>-->
                     <p>
-                        <input type="checkbox" value="remember" id="checkbox" name="remember-me"/>Remember Me
+                        <button class="btn btn-primary btn-lg btn-block">登陆</button>
                     </p>
                 </form>
-                <p>
-                    <button class="btn btn-primary btn-lg btn-block" onclick="login()">登陆</button>
-                </p>
+
             </div>
         </div>
     </div>
@@ -101,15 +102,30 @@
         crossorigin="anonymous"></script>
 
 <script>
+    //创建登陆表单的csrf令牌
+    function createCSRFToken() {
+        //创建token
+        var createCsrfTokenNode = document.createElement("input");
+        createCsrfTokenNode.name = "_csrf";
+        createCsrfTokenNode.type = "hidden";
+        createCsrfTokenNode.value = getCookie("X-CSRF-TOKEN");
 
-
-    //向服务器发送登陆验证需要的表单数据
-    function login() {
-        var uri = "/login";
-        //向服务器发送数据
-        ajax(serializeForm('form'), "POST", uri, "application/x-www-form-urlencoded");
+        //插入token
+        var form = document.getElementsByTagName("form");
+        form[0].insertBefore(createCsrfTokenNode, form[0].lastElementChild);
     }
 
+
+    //检查登陆状态
+    function loginStateCheck() {
+        //查看uri是否包含登陆错误的error字符串
+        if(document.URL.search("error") != -1){
+            document.getElementById("tips").innerHTML = combineMessage("alert-danger", "邮箱或密码错误请重新输入");
+        }
+
+    }
+
+    var xhrt = null;
     /**
      * ajax方法
      * @param data
@@ -119,6 +135,7 @@
         var xhr = new XMLHttpRequest();
         //需要在open()方法之前调用onreadystatechange事件，确保跨浏览器的兼容性
         xhr.onreadystatechange = function () {
+            xhrt = xhr;
             //状态从0-4，4表示接受了全部响应可以在客户端使用
             if (xhr.readyState == 4) {
                 if ((xhr.status >= 200 && xhr.status <= 300) || xhr.status == 304) {
@@ -128,14 +145,15 @@
                             if (getCookie("login") == "true") {
                                 document.getElementById("tips").innerHTML = combineMessage("alert-success", "登陆成功正在跳转到主页...");
                                 setTimeout(function () {
-                                    document.location = 'http://localhost:8080';
+                                    document.write(xhr.responseText);
                                 }, 1000);
                             }
                             else {
                                 document.getElementById("tips").innerHTML = combineMessage("alert-danger", "邮箱或密码错误请重新输入");
                             }
                     }
-                } else {
+                }
+                else {
                     var httpHeader = xhr.getResponseHeader("Message");
                     switch (httpHeader) {
                         default:
