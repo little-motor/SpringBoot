@@ -38,7 +38,28 @@ var user = {
     rememberMe: undefined
 };
 
-
+/**
+ * 负责根据用户的登陆状态进行页面布局的调整
+ */
+function loginState(){
+    var login = getCookie("login") == "true";
+    //登陆状态
+    if(login){
+        var elements = document.getElementsByClassName("logout");
+        for (var i=0,length=elements.length; i<length; i++)
+        {
+            elements[i].className += " hidden";
+        }
+    }
+    //非登陆状态
+    else {
+        var elements = document.getElementsByClassName("login");
+        for (var i=0,length=elements.length; i<length; i++)
+        {
+            elements[i].className += " hidden";
+        }
+    }
+}
 
 /**
  * 负责组合提示的消息，其中reminderState传递提示的状态（可选的有alert-success、alert-info、alert-warning、alert-danger）
@@ -95,8 +116,6 @@ function getCookie(key) {
 //     xhr.send(data);
 // }
 
-
-
 /**
  * 序列化表单的公共方法
  * @param id
@@ -148,25 +167,87 @@ function serializeForm(id) {
 }
 
 /**
- * 负责根据用户的登陆状态进行页面布局的调整
+ * 在页面显示由getMessage调用ajax之后异步返回的message list
+ * @param responseText 返回的responseText
+ * @param displayNum 页面展示的数量
  */
-function loginState(){
-    var login = getCookie("login") == "true";
-    //登陆状态
-    if(login){
-        var elements = document.getElementsByClassName("logout");
-        for (var i=0,length=elements.length; i<length; i++)
-        {
-            elements[i].className += " hidden";
+function showMessageList(responseText, displayNum){
+    if (responseText != null) {
+        message = JSON.parse(responseText);
+        //循环遍历显示列表，目前最多显示最近的5个元素
+        for (var index = 0; ((index < message.length) && index < displayNum) ; index++) {
+            //注意messageData有null的情况
+            if (message[index].messageData != null) {
+                //postedMessages包含media节点，每个media节点包括message、comment、like等信息
+                var postedMessages = document.getElementById("postedMessages");
+
+                    //创建media div元素
+                    var createDivMedia = document.createElement("div");
+                    createDivMedia.className = "media";
+
+                        //创建media-left div元素
+                        var createDivMediaLeft = document.createElement("div");
+                        createDivMediaLeft.className = "media-left col-md-3";
+                        var createLeftTextNode = document.createElement("h1")
+                        //日期注意传过来的是时间戳转换为本地时间
+                        var elementDateTime = document.createTextNode(new Date(message[index].messageCreateDate).toLocaleDateString().replace(/2019\//, ""));
+                        createLeftTextNode.appendChild(elementDateTime);
+                        createDivMediaLeft.appendChild(createLeftTextNode);
+
+                        //创建media-body元素
+                        var createDivMediaBody = document.createElement("div");
+                        createDivMediaBody.className = "media-body";
+                        createDivMediaBody.id = message[index].messageId;
+                        var createBodyTextNode = document.createElement("h3");
+                        //消息具体内容
+                        var elementMessage = document.createTextNode(message[index].messageData);
+                        createBodyTextNode.appendChild(elementMessage);
+                        createDivMediaBody.appendChild(createBodyTextNode);
+
+                            //爱心icon标签
+                            var createIconHeartNode = document.createElement("span");
+                            createIconHeartNode.className = "glyphicon glyphicon-heart-empty";
+                            //绑定点赞函数，并且只会执行一次
+                            createIconHeartNode.addEventListener("click", like.bind(this), {once: true});
+                            var createHeartNumNode = document.createElement("span");
+                            createHeartNumNode.className = "likeNum";
+                            var elementLikeNum = document.createTextNode(message[index].likeNum);
+                            createHeartNumNode.appendChild(elementLikeNum);
+
+                            //评论icon标签
+                            var createIconCommentNode = document.createElement("span");
+                            createIconCommentNode.className = "glyphicon glyphicon-comment";
+                            //绑定评论展开函数
+                            createIconCommentNode.addEventListener("click", unFold.bind(this), {once: true});
+                            var commentNum = 0;
+                            if ((message[index].comments.length == 1) && (message[index].comments[0].commentData == null)) {
+                                commentNum = 0;
+                            } else {
+                                commentNum = message[index].comments.length;
+                            }
+                            var createCommentNumNode = document.createElement("span");
+                            createCommentNumNode.className = "commentNum";
+                            var elementCommentNum = document.createTextNode(commentNum);
+                            createCommentNumNode.appendChild(elementCommentNum);
+
+                        createDivMediaBody.appendChild(createIconHeartNode);
+                        createDivMediaBody.appendChild(createHeartNumNode);
+                        createDivMediaBody.appendChild(createIconCommentNode);
+                        createDivMediaBody.appendChild(createCommentNumNode);
+
+                    //一个完整了message 节点组装
+                    //组装左部日期
+                    createDivMedia.appendChild(createDivMediaLeft);
+                    //组装右部message
+                    createDivMedia.appendChild(createDivMediaBody);
+                    //组装评论具体内容,默认隐藏
+                    //createDivMedia = appendComment(message[index].comments,createDivMedia);
+
+                //将组装好的单个media节点装入postedMessages
+                postedMessages.appendChild(createDivMedia);
+            }
         }
-    }
-    //非登陆状态
-    else {
-        var elements = document.getElementsByClassName("login");
-        for (var i=0,length=elements.length; i<length; i++)
-        {
-            elements[i].className += " hidden";
-        }
+        console.log("数组大小：" + message.length);
     }
 }
 
