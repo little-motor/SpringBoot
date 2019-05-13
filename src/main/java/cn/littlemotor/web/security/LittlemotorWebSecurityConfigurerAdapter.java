@@ -62,7 +62,9 @@ public class LittlemotorWebSecurityConfigurerAdapter extends WebSecurityConfigur
         http
                 //测试用
                 .authorizeRequests().antMatchers("/home").authenticated()
-                .and().authorizeRequests().antMatchers("/message/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .and().authorizeRequests().antMatchers("/user/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .and().authorizeRequests().antMatchers("/message/like").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .and().authorizeRequests().antMatchers("/message/comment").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .and().authorizeRequests().antMatchers("/**").permitAll()
                 //自定义你登陆页面
                 .and().formLogin().loginPage("/login")
