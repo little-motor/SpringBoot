@@ -17,7 +17,7 @@ import java.util.List;
  * 对一些常用cookie进行操作的通用方法，注意每次要先初始化之后再使用
  * 经过考虑我觉得此处不应该使用static方法，而应该用对象实例化，应为每个session对应着不同的用户访问
  * 如果用static方法，那么所有访问用户都共享一个cookie方法这是不合理的、阻塞的、不安全的、即使用多线程也不太好
- * 总而言之要么是时间换空间，要么是空间换时间，此处还是实例化比较妥当
+ * 总而言之要么是时间换空间，要么是空间换时间，这个类还是实例化后使用比较妥当
  * @author littlemotor
  * @date 19.4.10
  */
@@ -71,6 +71,7 @@ public class CookieMethod {
             Authentication authentication = securityContext.getAuthentication();
             User customUser = (UserDetailsServiceImpl.CustomUser) authentication.getPrincipal();
             UserLogin userLogin = ((UserDetailsServiceImpl.CustomUser) customUser).getUserLogin();
+            //判断是否有用户登陆
             if(userLogin != null){
 
                 //idCookie

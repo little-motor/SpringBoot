@@ -21,7 +21,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
     }
 
-    //负责推出后对cookie进行删除操作
+    //负责退出后对所有cookie进行删除操作
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         Cookie[] cookies = request.getCookies();

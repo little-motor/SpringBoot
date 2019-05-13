@@ -16,6 +16,19 @@ import java.util.List;
 //注意此处需要加Mapper注释，否则无法搜索到这个接口
 @Mapper
 public interface MessageDao {
+    /**
+     * web.controller.MessageController
+     * 返回指定用户的Message list
+     * @return
+     */
+    public List<Message> getMessage(int userId);
+
+    /**
+     * web.contorller.CommunityController
+     * 用于在社区页面显示所有的留言
+     * @return
+     */
+    public List<Message> getAllMessage();
 
     /**
      * web.controller.MessageController
@@ -30,11 +43,8 @@ public interface MessageDao {
      */
 //    public void insertUserMessage(Message message);
 
-    /**
-     * web.controller.MessageController
-     * 返回查询到的Message对象list
-     * @return
-     */
-    public List<Message> getMessage(int userId);
+
+
+
 
 }
