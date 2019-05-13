@@ -12,6 +12,7 @@
     <!--insert into user_message(`user_id`,`message_id`) values (#{userId},#{messageId});-->
     <!--</insert>-->
 
+    <!--查询指定用户的所有message-->
     <select id="getMessage" parameterType="int" resultMap="messageList">
         SELECT message.id as "message_id",message.user_id,message.message_data,message.message_create_date,
         `comment`.id as "comment_id",`comment`.comment_data,`comment`.user_id,`comment`.user_name,`comment`.comment_create_date,`comment`.has_comment,
@@ -20,6 +21,17 @@
         LEFT JOIN `comment` ON `comment`.message_id=message.id
         LEFT JOIN `like` ON `like`.message_id=message.id
         WHERE message.user_id=#{userId}
+        order by message.id desc ;
+    </select>
+
+    <!--查询所有用户的message-->
+    <select id="getAllMessage" parameterType="int" resultMap="messageList">
+        SELECT message.id as "message_id",message.user_id,message.message_data,message.message_create_date,
+        `comment`.id as "comment_id",`comment`.comment_data,`comment`.user_id,`comment`.user_name,`comment`.comment_create_date,`comment`.has_comment,
+        `like`.like_num
+        FROM message
+        LEFT JOIN `comment` ON `comment`.message_id=message.id
+        LEFT JOIN `like` ON `like`.message_id=message.id
         order by message.id desc ;
     </select>
 
