@@ -1,5 +1,6 @@
 package cn.littlemotor.web.model.service.content;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -8,7 +9,9 @@ import java.util.List;
  * @author littlemotor
  * @date 19.4.16
  */
-public class Message {
+public class Message implements Serializable {
+
+    private static final long serialVersionUID = 2545340639108967613L;
 
     //message id
     private int messageId;

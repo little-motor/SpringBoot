@@ -1,6 +1,11 @@
 package cn.littlemotor.web.model.service.content;
 
-public class Like {
+import java.io.Serializable;
+
+public class Like implements Serializable {
+
+    private static final long serialVersionUID = 6929636706522395940L;
+
     private int likeId;
     private int messageId;
     private int likeNum;

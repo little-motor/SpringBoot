@@ -1,5 +1,6 @@
 package cn.littlemotor.web.model.service.content;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -7,7 +8,10 @@ import java.sql.Timestamp;
  * @author littlemotor
  * @date 19.5.6
  */
-public class Comment {
+public class Comment implements Serializable {
+
+    private static final long serialVersionUID = 477750822408438451L;
+
     private int commentId;
     private int messageId;
     private String commentData = null;
