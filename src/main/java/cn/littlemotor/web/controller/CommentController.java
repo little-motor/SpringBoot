@@ -17,14 +17,14 @@ public class CommentController {
     CommentDao commentDao = null;
 
     //插入用户发表的评论
-    @PostMapping(path = "/message/comment")
+    @PostMapping(path = "/user/message/comment")
     public int insertComment(@RequestBody Comment comment){
         commentDao.insertComment(comment);
         return comment.getCommentId();
     }
 
     //删除评论
-    @DeleteMapping(path = "/message/comment")
+    @DeleteMapping(path = "/user/message/comment")
     public void deleteComment(int id){
         commentDao.deleteComment(id);
         System.out.println("delete id:" + id);

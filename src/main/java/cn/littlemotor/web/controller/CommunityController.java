@@ -33,6 +33,10 @@ public class CommunityController {
         return new ModelAndView("community.html");
     }
 
+    /**
+     * 返回所有的message消息
+     * @return
+     */
     @GetMapping(path = "/community/message")
     public ResponseEntity<String> getCommunityMessage(){
         //json缩进格式

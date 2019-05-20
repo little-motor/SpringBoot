@@ -29,7 +29,7 @@ public class User {
     private String rememberToken = null;
     private boolean login = false;
     //默认为ROLE_USER
-    private String roleContent = "ROLE_USER";
+    private String role = "ROLE_USER";
     private Timestamp createDate = null;
     private String describe = null;
 
@@ -38,7 +38,7 @@ public class User {
     public User() {
     }
 
-    public User(int id, String name, String sex, String email, String phone, String password, int active, String activeToken, boolean rememberMe, String rememberToken, boolean login, String roleContent, Timestamp createDate, String describe) {
+    public User(int id, String name, String sex, String email, String phone, String password, int active, String activeToken, boolean rememberMe, String rememberToken, boolean login, String role, Timestamp createDate, String describe) {
         this.id = id;
         this.name = name;
         this.sex = sex;
@@ -50,7 +50,7 @@ public class User {
         this.rememberMe = rememberMe;
         this.rememberToken = rememberToken;
         this.login = login;
-        this.roleContent = roleContent;
+        this.role = role;
         this.createDate = createDate;
         this.describe = describe;
     }
@@ -137,12 +137,12 @@ public class User {
         }
     }
 
-    public void setRoleContent(String roleContent){
-        this.roleContent = roleContent;
+    public void setRole(String roleContent){
+        this.role = roleContent;
     }
 
-    public String getRoleContent(){
-        return roleContent;
+    public String getRole(){
+        return role;
     }
 
     public String getRememberToken() {
@@ -184,7 +184,7 @@ public class User {
         userInfo.put("email", this.email);
         userInfo.put("phone", this.phone);
         userInfo.put("password", this.password);
-        userInfo.put("roleContent", this.roleContent);
+        userInfo.put("role", this.role);
         userInfo.put("active", Integer.toString(this.active));
         userInfo.put("remember", Boolean.toString(this.rememberMe));
         userInfo.put("login", Boolean.toString(this.login));

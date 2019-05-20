@@ -19,7 +19,7 @@ public class LikeController {
     @Autowired
     LikeDao likeDao = null;
 
-    @PostMapping(path = "/message/like")
+    @PostMapping(path = "/user/message/like")
     public void addLikeNum(@RequestBody Like like){
         System.out.println("ID dian zan ： " + like.getLikeNum());
         likeDao.insertLikeNum(like);
