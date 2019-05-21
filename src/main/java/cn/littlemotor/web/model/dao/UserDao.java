@@ -28,6 +28,13 @@ public interface UserDao {
     //注册用户时使用
     public void setUser(User user);
 
+    /**
+     * 更新用户信息时使用
+     * controller.UserController
+     * @param user
+     */
+    public void updateUser(User user);
+
 
 
 }

@@ -53,7 +53,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public class CustomUser extends org.springframework.security.core.userdetails.User{
 
         private static final long serialVersionUID = -7958264758047805588L;
-        
+
         private UserLogin userLogin = null;
 
         public CustomUser(UserLogin userLogin) {
