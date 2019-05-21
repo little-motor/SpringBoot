@@ -12,7 +12,7 @@
 
     <settings>
         <!--&lt;!&ndash; 这个配置使全局的映射器启用或禁用缓存 &ndash;&gt;-->
-        <setting name="cacheEnabled" value="true"></setting>
+        <!--<setting name="cacheEnabled" value="true"></setting>-->
         <!-- 允许自动生成主键，需要驱动支持 -->
         <setting name="useGeneratedKeys" value="true"></setting>
         <!--&lt;!&ndash; 配置默认的执行器 &ndash;&gt;-->
