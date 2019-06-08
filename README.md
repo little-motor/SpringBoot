@@ -12,7 +12,7 @@ The [spring.io](https://spring.io/) site contains several guides that show how t
 
 Welcome to my [blog](https://blog.csdn.net/qq_39385118), where I have written many notes.
 
-详细的部署教程请前往wiki
+详细的部署教程请前往[wiki](https://github.com/little-motor/SpringBoot-in-Action/wiki/%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B)
 # License
 Spring Boot is Open Source software released under the Apache 2.0 license.
 This project also contain other software which may be under other licenses.As for any usage, it is the user's responsibility to ensure that any use of this project complies with any relevant licenses for all software contained within.
