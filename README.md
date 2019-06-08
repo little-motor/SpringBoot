@@ -13,3 +13,4 @@ The [spring.io](https://spring.io/) site contains several guides that show how t
 Welcome to my [blog](https://blog.csdn.net/qq_39385118), where I have written many notes.
 # License
 Spring Boot is Open Source software released under the Apache 2.0 license.
+This project also contain other software which may be under other licenses.As for any usage, it is the user's responsibility to ensure that any use of this project complies with any relevant licenses for all software contained within.
