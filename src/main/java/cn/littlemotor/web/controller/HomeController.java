@@ -7,6 +7,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class HomeController {
 
+    //@Autowired
+    //ProducerTest producerTest = null;
+
     @GetMapping(path = "/")
     public ModelAndView homeWithGet(){
         ModelAndView modelAndView = new ModelAndView("home.html");
@@ -15,27 +18,11 @@ public class HomeController {
     }
 
     @GetMapping(path = "/home")
-    public ModelAndView homeRedirect(){
+    public void homeRedirect(){
         System.out.println("home2");
-        ModelAndView modelAndView = new ModelAndView("redirect:/");
-        return modelAndView;
+       // producerTest.testProducer();
+        //ModelAndView modelAndView = new ModelAndView("redirect:/");
     }
 
-//    /**
-//     * responseEntity可以封装对象，添加http头，以及响应码
-//     */
-//    @PostMapping(path = "/register")
-//    public ResponseEntity<String> register(@RequestBody User user) {
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        try {
-//            userDao.setUser(user);
-//            httpHeaders.add("registed", "success");
-//        }catch (Exception e){
-////            System.out.println("输出错误：" + e.toString());
-//            throw e;
-//
-//        }
-//        return new ResponseEntity<>(httpHeaders, HttpStatus.CREATED);
-//    }
 
 }

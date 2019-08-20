@@ -202,6 +202,16 @@ function showMessageList(responseText, displayNum) {
                 createBodyTextNode.appendChild(elementMessage);
                 createDivMediaBody.appendChild(createBodyTextNode);
 
+                // //删除按键，注意判断用户
+                // if (commentData[commentIndex].userId == getCookie("userId")) {
+                //     var createCommentDeleteNode = document.createElement("a");
+                //     createCommentDeleteNode.setAttribute("onclick", "deleteComment(this)");
+                //     createCommentDeleteNode.className = "pull-right";
+                //     var elementCommentDeleteData = document.createTextNode("删除");
+                //     createCommentDeleteNode.appendChild(elementCommentDeleteData);
+                //     createPanelBodyNode.appendChild(createCommentDeleteNode);
+                // }
+
                 //爱心icon标签
                 var createIconHeartNode = document.createElement("span");
                 createIconHeartNode.className = "glyphicon glyphicon-heart-empty";

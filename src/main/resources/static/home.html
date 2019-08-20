@@ -94,16 +94,16 @@
         <div class="row">
             <div class="col-lg-4">
                 <h2>声明</h2>
-                <p class="text-danger">本网站主要用于学习用途，基于GUNv3.0协议，如有引用请注明来源，网站源代码请访问GitHub主页</p>
+                <p class="text-danger">本网站主要用于学习用途，基于Apache License，如有引用请注明来源，网站源代码请访问GitHub主页</p>
                 <p>后端框架目前为Spring，Mybatis，Mysql和Redis实现，目前正在一步步迭代当中，前端页面主要依靠Bootstrap，还在不断改进当中 </p>
-                <p><a class="btn btn-primary" href="https://github.com/little-motor" role="button">View Source Code
+                <p><a class="btn btn-primary" href="https://github.com/little-motor/SpringBoot-in-Action" role="button">View Source Code
                     »</a>
                 </p>
             </div>
             <div class="col-lg-4 col-lg-offset-2">
                 <h2>简介</h2>
-                <p>我是小马达，因为我喜欢web后端开发相关的技术，自己制作了这个网站，我会在后期通过docker完善整个部署流程，让需要的朋友通过简单的几步即可完成部署，并根据自己的需要增加功能。</p>
-                <p><a class="btn btn-primary" href="#" role="button">部署教程 »</a></p>
+                <p>我是小马达，因为我喜欢web后端开发相关的技术，自己制作了这个网站，主要用于学习和交流后端开发技术，后期会逐渐迭代为分布式系统，详细的部署教程请点击部署教程</p>
+                <p><a class="btn btn-primary" href="https://github.com/little-motor/SpringBoot-in-Action/wiki/%E9%83%A8%E7%BD%B2%E6%95%99%E7%A8%8B" role="button">部署教程 »</a></p>
             </div>
         </div>
     </div>
@@ -162,7 +162,7 @@
                         case "/logout":
                             document.getElementById("tips").innerHTML = combineMessage("alert-success", "注销成功正在跳转到主页...");
                             setTimeout(function () {
-                                document.location = 'http://localhost:8080';
+                                document.location = 'http://www.littlemotor.cn';
                             }, 1000);
                             break;
 

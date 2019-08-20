@@ -1,0 +1,53 @@
+#默认true时使用cglib  AopAutoConfiguration中默认使用true
+#spring:
+#  aop:
+#    proxy-target-class: false
+
+
+#DataSource配置
+#jdbc config
+spring:
+  datasource:
+    #SPI(Service provider Interface)机制会自动发现并注册
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    #注意设置时区防止出现时差
+    url: jdbc:mysql://localhost:3306/littlemotor?useTimezone=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    # Hikari will use the above plus the following to setup connection pooling
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: littlemotor
+    password: 123456
+
+
+#MyBates映射文件通配
+mybatis:
+  #mapper-locations: classpath:static/mybatis/mapper/*.xml
+  #扫描别名包和@Alias通用
+  #type-aliases-package: cn.littlemotor.web.model.pojo.user
+  #配置文件路径
+  config-location: classpath:/mybatis/MybatisConfig.xml
+
+
+
+#日志配置
+logging:
+  level:
+    root: debug
+    org:
+      springframework: debug
+      org:
+        mybatis: debug

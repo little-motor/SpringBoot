@@ -22,15 +22,15 @@
     <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <![endif]-->
 
-    <script src="http://localhost:8080/basicMethod.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://localhost:8080/basicStyle.css">
+    <script src="http://www.littlemotor.cn/basicMethod.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://www.littlemotor.cn/basicStyle.css">
 </head>
 
 
 <body onload="loginState();getMessages()">
 
 <!--显示页头-->
-<script src="http://localhost:8080/head.js"></script>
+<script src="http://www.littlemotor.cn/head.js"></script>
 
 <!--中间部分-->
 <div class="container-fluid">
@@ -62,7 +62,7 @@
 
 
 <!--显示页尾-->
-<script src="http://localhost:8080/foot.js"></script>
+<script src="http://www.littlemotor.cn/foot.js"></script>
 
 <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
@@ -316,7 +316,7 @@
                         case "/user/message":
                             document.getElementById("submitMessageTips").innerHTML = combineMessage("alert-success", "发送成功");
                             setTimeout(function () {
-                                document.location = 'http://localhost:8080/community';
+                                document.location = 'http://www.littlemotor.cn/community';
                             }, 1000);
                             break;
 
@@ -358,9 +358,9 @@
                             break;
 
                         case "/logout":
-                            document.getElementById("tips").innerHTML = combineMessage("alert-success", "注销成功正在跳转到主页...");
+                            document.getElementById("postedMessageTips").innerHTML = combineMessage("alert-success", "注销成功正在跳转到主页...");
                             setTimeout(function () {
-                                document.location = 'http://localhost:8080';
+                                document.location = 'http://www.littlemotor.cn';
                             }, 1000);
                             break;
                     }

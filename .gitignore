@@ -56,3 +56,10 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+out/**
+/out/
+out/production/
+
+
+### Maven ###
+/target/**
